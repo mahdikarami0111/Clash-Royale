@@ -1,6 +1,4 @@
-package model.items;
-
-import javafx.geometry.Point2D;
+package model.spells;
 
 public class Arrows  {
     private static int damage;

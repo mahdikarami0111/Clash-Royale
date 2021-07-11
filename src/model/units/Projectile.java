@@ -1,4 +1,4 @@
-package model.items;
+package model.units;
 
 import model.enums.Type;
 

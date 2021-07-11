@@ -5,7 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 import model.enums.Type;
-import model.items.Projectile;
+import model.units.Projectile;
 import model.units.Troops;
 import model.units.Unit;
 

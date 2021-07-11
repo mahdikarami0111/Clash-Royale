@@ -1,9 +1,4 @@
-package model.items;
-
-import model.units.Unit;
-
-import javafx.geometry.Point2D;
-import java.util.ArrayList;
+package model.spells;
 
 public class Rage {
     private static int duration;

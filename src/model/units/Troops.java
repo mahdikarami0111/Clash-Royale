@@ -31,6 +31,4 @@ public class Troops extends Unit {
         //if pixel location matches destTile -> current = dest & set new dest
         //set status based on movement
     }
-
-
 }

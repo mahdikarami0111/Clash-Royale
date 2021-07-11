@@ -5,21 +5,12 @@ import model.enums.Cell;
 import model.enums.Type;
 import model.informationObjects.UnitInformation;
 
-public class KingTower extends Unit {
-
-    private boolean canAttack;
+public class QueenTower extends Unit{
 
 
-    public KingTower(UnitInformation unitInformation, Type type, Cell team, Point2D location) {
+    public QueenTower(UnitInformation unitInformation, Type type, Cell team, Point2D location) {
         super(unitInformation, type, team, location);
-
     }
-
-    @Override
-    public void checkForAttack(){
-        //checks for attack range
-    }
-
     @Override
     public void attack(){
 

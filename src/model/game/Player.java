@@ -3,10 +3,9 @@ package model.game;
 import javafx.geometry.Point2D;
 import model.enums.Cell;
 import model.enums.Type;
-import model.items.Projectile;
+import model.units.Projectile;
 import model.units.Building;
 import model.units.Troops;
-import model.units.Unit;
 
 import java.util.ArrayList;
 

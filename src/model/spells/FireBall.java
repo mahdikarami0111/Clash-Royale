@@ -1,4 +1,4 @@
-package model.items;
+package model.spells;
 
 import javafx.geometry.Point2D;
 import model.enums.Cell;

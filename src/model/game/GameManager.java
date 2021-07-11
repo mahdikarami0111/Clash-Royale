@@ -3,10 +3,9 @@ package model.game;
 import View.CRView;
 import model.enums.Type;
 import model.informationObjects.UnitInformation;
-import model.units.Building;
 import model.units.Troops;
 import model.enums.Cell;
-import model.items.Projectile;
+import model.units.Projectile;
 
 import javafx.geometry.Point2D;
 import model.units.Unit;
