@@ -8,13 +8,12 @@ import model.informationObjects.UnitInformation;
 public class Troops extends Unit {
 
     private Point2D pixelLocation;
-    private Point2D current;
     private Point2D dest;
     private Point2D target;
     private int movementSpeed;
 
     public Troops(UnitInformation unitInformation, Type type, Cell team, Point2D location){
-        super(unitInformation,type,team);
+        super(unitInformation,type,team,location);
         //set ms and type
     }
 
@@ -33,14 +32,5 @@ public class Troops extends Unit {
         //set status based on movement
     }
 
-    @Override
-    public void attack(){
-        //find closest enemy and reduce his hp
-
-        // if range bigger than 1 summon projectile
-//        Projectile p =new Projectile(current,enemy loc,this.type);
-        //gameManager.spawn projectile P
-        //set status = attacking
-    }
 
 }

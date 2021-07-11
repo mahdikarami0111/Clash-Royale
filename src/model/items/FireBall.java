@@ -1,14 +1,14 @@
 package model.items;
 
-import java.awt.geom.Point2D;
+import javafx.geometry.Point2D;
+import model.enums.Cell;
 
-public class FireBall extends Spell{
+public class FireBall{
+    private static int radius;
+    private static int damage;
+    private static int cost;
 
-    private int damage;
+    public static void attack(Point2D location, Cell team){
 
-    public FireBall(Point2D Location,int damage) {
-        super(Location);
     }
-
-    public void attack(){}
 }

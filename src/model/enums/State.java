@@ -5,4 +5,5 @@ public enum State {
     ATTACKING,
     MOVING_LEFT,
     MOVING_RIGHT,
+    IDLE,
 }

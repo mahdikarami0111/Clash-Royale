@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 import model.enums.Type;
 import model.items.Projectile;
+import model.units.Troops;
 import model.units.Unit;
 
 import java.util.HashMap;
@@ -14,11 +15,11 @@ public class CRView extends Group {
     private Canvas canvas;
     private GraphicsContext gc;
 
-    private HashMap<Unit, CustomImageview> map;
+    private HashMap<Troops, CustomImageview> map;
     private HashMap<Projectile,ImageView> projectiles;
 
     private HashMap<Type,CustomImageview> soldierImages;
-    private HashMap<Type,ImageView> projectileImages;
+    private HashMap<Type,ImageView> StaticImages;
 
     private static final String mapAddress = "";
 

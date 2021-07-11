@@ -2,7 +2,7 @@ package model.items;
 
 import model.enums.Type;
 
-import java.awt.geom.Point2D;
+import javafx.geometry.Point2D;
 
 public class Projectile {
     private Point2D start;

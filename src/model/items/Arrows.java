@@ -1,13 +1,11 @@
 package model.items;
 
-import java.awt.geom.Point2D;
+import javafx.geometry.Point2D;
 
-public class Arrows extends Spell {
-    private int damage;
+public class Arrows  {
+    private static int damage;
+    private static int radius;
 
-    public Arrows(Point2D Location,int damage) {
-        super(Location);
-    }
 
-    public void attack(){}
+    public static void attack(){}
 }
