@@ -1,6 +1,7 @@
 package model.units;
 
 import View.CRView;
+import model.enums.CellType;
 import model.game.GameManager;
 import model.enums.Cell;
 import model.enums.TargetType;
@@ -21,7 +22,7 @@ public  class Unit {
     private int count;
 
 
-    private Cell team;
+    private CellType team;
     protected Point2D currentLocation;
 
 
@@ -29,7 +30,7 @@ public  class Unit {
     public CRView view;
 
 
-    public Unit(UnitInformation unitInformation,Type type,Cell team,Point2D location){
+    public Unit(Type type, CellType team, Point2D location){
         //set fields to information on unitInformation
     }
 
@@ -47,5 +48,10 @@ public  class Unit {
         //if range bigger than 1 summon projectile
         //Projectile p =new Projectile(location,enemy loc,this.type);
         //gameManager.spawn projectile P
+    }
+
+
+    public CellType getTeam() {
+        return team;
     }
 }

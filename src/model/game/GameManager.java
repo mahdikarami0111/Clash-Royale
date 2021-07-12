@@ -1,6 +1,7 @@
 package model.game;
 
 import View.CRView;
+import model.enums.CellType;
 import model.enums.Type;
 import model.informationObjects.UnitInformation;
 import model.units.Troops;
@@ -12,6 +13,8 @@ import model.units.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameManager {
 
@@ -29,7 +32,39 @@ public class GameManager {
     private CRView view;
 
     public GameManager(int lvl){
+        this.lvl = lvl;
+        player = new Player(CellType.PLAYER);
+        bot = new Player(CellType.BOT);
+        timer = 0;
+        startTimer();
+        elixirMaker();
+    }
 
+    public void startTimer(){
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                timer++;
+            }
+        };
+        Timer t = new Timer();
+        t.schedule(task,0,1000);
+    }
+
+    public void elixirMaker(){
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                if(timer>=120){
+                    player.setElixirRate(4);
+                    bot.setElixirRate(4);
+                }
+                player.addElixir();
+                bot.addElixir();
+            }
+        };
+        Timer t = new Timer();
+        t.schedule(task,0,1000);
     }
 
     public void initializeSpells(){

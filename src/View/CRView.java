@@ -17,6 +17,7 @@ public class CRView extends Group {
 
     private HashMap<Troops, CustomImageview> map;
     private HashMap<Projectile,ImageView> projectiles;
+    private HashMap<Unit,ImageView> buildings;
 
     private HashMap<Type,CustomImageview> soldierImages;
     private HashMap<Type,ImageView> StaticImages;

@@ -2,6 +2,7 @@ package model.units;
 
 import javafx.geometry.Point2D;
 import model.enums.Cell;
+import model.enums.CellType;
 import model.enums.Type;
 import model.informationObjects.UnitInformation;
 
@@ -12,8 +13,8 @@ public class Troops extends Unit {
     private Point2D target;
     private int movementSpeed;
 
-    public Troops(UnitInformation unitInformation, Type type, Cell team, Point2D location){
-        super(unitInformation,type,team,location);
+    public Troops(Type type, CellType team, Point2D location){
+        super(type,team,location);
         //set ms and type
     }
 

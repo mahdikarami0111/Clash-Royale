@@ -1,6 +1,7 @@
-package model.game;
+package model.game.sharedRecourses;
 
 import model.enums.Cell;
+import model.enums.CellType;
 
 public class Map {
     private static Map instance = null;
@@ -8,7 +9,12 @@ public class Map {
     private Cell[][] map;
 
     private Map(){
-        //read map data from file and put in map variable
+        map = new Cell[32][18];
+        for(int i = 0;i<32;i++){
+            for(int j = 0;j<18;j++){
+                map[i][j] = new Cell(CellType.PATH);
+            }
+        }
     }
 
     public static Cell[][] getMap(){
