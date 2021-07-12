@@ -92,7 +92,13 @@ public class GameManager {
         bot.action();
     }
 
-
+    public void updateCrowns(Player p, int crowns){
+        if(p.getTeam() == CellType.PLAYER){
+            bot.setCrown(bot.getCrown()+crowns);
+        }else {
+            player.setCrown(player.getCrown()+crowns);
+        }
+    }
 
     public ArrayList<Unit> getUnits() {
         return units;

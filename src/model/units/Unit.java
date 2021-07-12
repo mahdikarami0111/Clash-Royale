@@ -58,4 +58,8 @@ public  class Unit {
     public int getHp() {
         return hp;
     }
+
+    public Point2D getCurrentLocation() {
+        return currentLocation;
+    }
 }

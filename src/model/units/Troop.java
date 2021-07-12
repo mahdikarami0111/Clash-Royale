@@ -1,12 +1,10 @@
 package model.units;
 
 import javafx.geometry.Point2D;
-import model.enums.Cell;
 import model.enums.CellType;
 import model.enums.State;
 import model.enums.Type;
 import model.game.sharedRecourses.View;
-import model.informationObjects.UnitInformation;
 
 public class Troop extends Unit {
 
@@ -23,7 +21,7 @@ public class Troop extends Unit {
     @Override
     public void setState(State state){
         this.state = state;
-        View.CRview().changeState(this);
+        View.CRView().changeState(this);
     }
 
     public void findTarget(){

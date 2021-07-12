@@ -1,6 +1,5 @@
 package model.game;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import javafx.geometry.Point2D;
 import model.enums.CellType;
 import model.enums.State;
@@ -79,30 +78,39 @@ public class Player {
                 }
             }
         }
-        View.CRview().spawnBuilding(kingTower);
-        View.CRview().spawnBuilding(queenTowers[0]);
-        View.CRview().spawnBuilding(queenTowers[1]);
+        View.CRView().spawnBuilding(kingTower);
+        View.CRView().spawnBuilding(queenTowers[0]);
+        View.CRView().spawnBuilding(queenTowers[1]);
 
     }
 
     public synchronized void summonTroop(Type type, Point2D location){
         Troop troop = new Troop(type,team,location);
         Map.getMap()[(int)location.getX()][(int)location.getY()].setUnit(troop);
+        Map.getMap()[(int)location.getX()][(int)location.getY()].setCellType(team);
         troops.add(troop);
     }
 
     public synchronized void summonBuilding(Type type,Point2D location){
         Building building = new Building(type,team,location);
+        Map.getMap()[(int)location.getX()][(int)location.getY()].setUnit(building);
+        Map.getMap()[(int)location.getX()][(int)location.getY()].setCellType(team);
+
         Game.gameManager().getUnits().add(building);
         buildings.add(building);
     }
 
     public void action(){
+
+
+
         for (Iterator<Troop> it = troops.iterator(); it.hasNext();){
             Troop temp  = it.next();
             if(temp.getHp()<0){
-                View.CRview().removeTroop(temp);
+                View.CRView().removeTroop(temp);
                 temp.setState(State.DEAD);
+                Map.getMap()[(int)temp.getCurrentLocation().getX()][(int)temp.getCurrentLocation().getY()].setUnit(null);
+                Map.getMap()[(int)temp.getCurrentLocation().getX()][(int)temp.getCurrentLocation().getY()].setCellType(CellType.PATH);
                 it.remove();
                 continue;
             }
@@ -113,11 +121,16 @@ public class Player {
                 temp.move();
             }
         }
+
+
+
         for (Iterator<Building> it = buildings.iterator();it.hasNext();){
             Building temp = it.next();
             if(temp.getHp()<0){
-                View.CRview().removeBuilding(temp);
+                View.CRView().removeBuilding(temp);
                 temp.setState(State.DEAD);
+                Map.getMap()[(int)temp.getCurrentLocation().getX()][(int)temp.getCurrentLocation().getY()].setUnit(null);
+                Map.getMap()[(int)temp.getCurrentLocation().getX()][(int)temp.getCurrentLocation().getY()].setCellType(CellType.PATH);
                 it.remove();
                 continue;
             }
@@ -128,23 +141,53 @@ public class Player {
                 temp.setState(State.IDLE);
             }
         }
-        if (kingTower.getHp()<0){
-            kingTower.setState(State.DEAD);
-            View.CRview().removeBuilding(kingTower);
-        }
-        else if(kingTower.checkForAttack() && kingTower.getState()== State.IDLE)kingTower.attack();
 
-        else {
-            kingTower.setState(State.IDLE);
+
+        if(kingTower.getState() != State.DEAD){
+            if (kingTower.getHp()<0){
+                kingTower.setState(State.DEAD);
+                clearKingMap();
+                Game.gameManager().updateCrowns(this,3);
+                View.CRView().removeBuilding(kingTower);
+            }
+            else if(kingTower.checkForAttack() && kingTower.getState()== State.IDLE)kingTower.attack();
+
+            else {
+                kingTower.setState(State.IDLE);
+            }
         }
+
+
+
         for (QueenTower queenTower : queenTowers){
+            if(queenTower.getState() == State.DEAD)continue;
             if(queenTower.getHp()<0){
                 queenTower.setState(State.DEAD);
-                View.CRview().removeBuilding(queenTower);
+                clearQueenMap(queenTower);
+                Game.gameManager().updateCrowns(this,1);
+                View.CRView().removeBuilding(queenTower);
             }
             else if(queenTower.checkForAttack() && queenTower.getState() == State.IDLE)queenTower.attack();
             else {
                 queenTower.setState(State.IDLE);
+            }
+        }
+    }
+
+    public void clearKingMap(){
+        for (int i = 0;i<4;i++){
+            for (int j = 0;j<4;j++){
+                Map.getMap()[(int)kingTower.getCurrentLocation().getX()+i][(int)kingTower.getCurrentLocation().getY()+j].setUnit(null);
+                Map.getMap()[(int)kingTower.getCurrentLocation().getX()+i][(int)kingTower.getCurrentLocation().getY()+j].setCellType(CellType.PATH);
+            }
+        }
+    }
+
+    public void clearQueenMap(QueenTower queenTower){
+        for (int i = 0;i<3;i++){
+            for (int j = 0;j<3;j++){
+                Map.getMap()[(int)queenTower.getCurrentLocation().getX()+i][(int)kingTower.getCurrentLocation().getY()+j].setUnit(null);
+                Map.getMap()[(int)queenTower.getCurrentLocation().getX()+i][(int)kingTower.getCurrentLocation().getY()+j].setCellType(CellType.PATH);
             }
         }
     }

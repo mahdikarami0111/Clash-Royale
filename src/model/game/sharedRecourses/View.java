@@ -16,7 +16,7 @@ public class View {
         }
     }
 
-    public static CRView CRview(){
+    public static CRView CRView(){
         return viewInstance.view;
     }
 }
