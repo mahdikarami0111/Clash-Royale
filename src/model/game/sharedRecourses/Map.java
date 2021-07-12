@@ -9,6 +9,8 @@ public class Map {
     private Cell[][] map;
 
     private Map(){
+        //temporary map for testing
+        //real map will be read froma file
         map = new Cell[32][18];
         for(int i = 0;i<32;i++){
             for(int j = 0;j<18;j++){

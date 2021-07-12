@@ -68,7 +68,7 @@ public class GameManager {
     }
 
     public void initializeSpells(){
-        //set static variables for spells
+
     }
 
     public void initMap(){
