@@ -1,11 +1,10 @@
 package model.game;
 
-import View.CRView;
 import model.enums.CellType;
+import model.enums.State;
 import model.enums.Type;
 import model.informationObjects.UnitInformation;
-import model.units.Troops;
-import model.enums.Cell;
+import model.units.Troop;
 import model.units.Projectile;
 
 import javafx.geometry.Point2D;
@@ -25,13 +24,14 @@ public class GameManager {
     private Player bot;
 
     private HashMap<Type, UnitInformation> unitInformationHashMap;
+    private ArrayList<Projectile> projectiles;
 
     private ArrayList<Unit> units;
 
-
-    private CRView view;
-
     public GameManager(int lvl){
+        unitInformationHashMap = new HashMap<>();
+        projectiles = new ArrayList<>();
+
         this.lvl = lvl;
         player = new Player(CellType.PLAYER);
         bot = new Player(CellType.BOT);
@@ -71,40 +71,26 @@ public class GameManager {
 
     }
 
-    public void initMap(){
-        //read map paths from a text file and set it
+    public void spawnTroop(Point2D location, Player player,Type type){
+        if(player.getElixir() >= unitInformationHashMap.get(type).cost){
+            player.summonTroop(type,location);
+        }
     }
 
-    public synchronized void spawnTroop(Troops troops){
-        //adds new unit to lists
-        //adds new unit to view
+    public void spawnBuilding(Point2D location, Player player, Type type){
+        if(player.getElixir() >= unitInformationHashMap.get(type).cost){
+            player.summonBuilding(type,location);
+        }
     }
 
-    public synchronized void spawnBuilding(Point2D location, Cell team, Type type){
-        //adds new unit to lists
-        //adds new unit to view
-    }
-
-    public void spawnProjectile(Projectile projectile){
-        //projectiles.add(projectile);
-        //view add projectile
+    public synchronized void spawnProjectile(Projectile projectile){
+        projectiles.add(projectile);
     }
 
     public void tick(){
-        //for all soldiers
-        //if hp = 0, set status dead
-        //if in attack range attack
-        //else move
-
-        //for all buildings
-        //if in attack range attack
-        //building.tick
-
-        //for all projectiles
-        //projectile move
+        player.action();
+        bot.action();
     }
-
-
 
 
 
@@ -130,9 +116,5 @@ public class GameManager {
 
     public HashMap<Type, UnitInformation> getUnitInformationHashMap() {
         return unitInformationHashMap;
-    }
-
-    public CRView getView() {
-        return view;
     }
 }

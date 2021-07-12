@@ -1,11 +1,8 @@
 package model.units;
 
 import View.CRView;
-import model.enums.CellType;
+import model.enums.*;
 import model.game.GameManager;
-import model.enums.Cell;
-import model.enums.TargetType;
-import model.enums.Type;
 import model.informationObjects.UnitInformation;
 
 import javafx.geometry.Point2D;
@@ -24,26 +21,25 @@ public  class Unit {
 
     private CellType team;
     protected Point2D currentLocation;
-
-
+    protected State state;
     public Type type;
-    public CRView view;
 
 
     public Unit(Type type, CellType team, Point2D location){
         //set fields to information on unitInformation
     }
 
-    public void checkForAttack(){
+    public boolean checkForAttack(){
         //checks for attack range
+        return true;
     }
 
-    public void setState(){
-        //sets state
-        //view.change state
+    public void setState(State state){
+        this.state = state;
     }
 
     public  void attack(){
+        state = State.ATTACKING;
         //find closest enemy and reduce his hp
         //if range bigger than 1 summon projectile
         //Projectile p =new Projectile(location,enemy loc,this.type);
@@ -53,5 +49,13 @@ public  class Unit {
 
     public CellType getTeam() {
         return team;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public int getHp() {
+        return hp;
     }
 }

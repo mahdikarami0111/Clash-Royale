@@ -17,8 +17,9 @@ public class KingTower extends Unit {
     }
 
     @Override
-    public void checkForAttack(){
+    public boolean checkForAttack(){
         //checks for attack range
+        return true;
     }
 
     @Override

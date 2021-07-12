@@ -10,6 +10,8 @@ import model.game.Player;
 import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.Map;
 
+import java.util.ArrayList;
+
 public class Main {
 
 //    @Override
@@ -23,17 +25,18 @@ public class Main {
 
     public static void main(String[] args) {
 //        launch(args);
-        Player p1 = new Player(CellType.PLAYER, Game.gameManager());
-        Player p2 = new Player(CellType.BOT,Game.gameManager());
-        for(int i = 0;i<32;i++){
-            for(int j = 0;j<18;j++){
-                if(Map.getMap()[i][j].getCellType() == CellType.PATH && Map.getMap()[i][j].getUnit() == null){
-                    System.out.print(". ");
-                }else if(Map.getMap()[i][j].getUnit() != null){
-                    System.out.print("* ");
-                }
-            }
-            System.out.println();
-        }
+//        Player p1 = new Player(CellType.PLAYER);
+//        Player p2 = new Player(CellType.BOT);
+//        for(int i = 0;i<32;i++){
+//            for(int j = 0;j<18;j++){
+//                if(Map.getMap()[i][j].getCellType() == CellType.PATH && Map.getMap()[i][j].getUnit() == null){
+//                    System.out.print(". ");
+//                }else if(Map.getMap()[i][j].getUnit() != null){
+//                    System.out.print("* ");
+//                }
+//            }
+//            System.out.println();
+//        }
+
     }
 }
