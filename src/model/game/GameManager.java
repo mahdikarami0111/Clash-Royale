@@ -20,10 +20,12 @@ public class GameManager {
     private int timer;
 
     private int lvl;
+
     private Player player;
     private Player bot;
 
     private HashMap<Type, UnitInformation> unitInformationHashMap;
+
     private ArrayList<Projectile> projectiles;
 
     private ArrayList<Unit> units;

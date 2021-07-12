@@ -38,12 +38,12 @@ public  class Unit {
         this.state = state;
     }
 
-    public  void attack(){
+    public void attack(){
         state = State.ATTACKING;
-        //find closest enemy and reduce his hp
-        //if range bigger than 1 summon projectile
-        //Projectile p =new Projectile(location,enemy loc,this.type);
-        //gameManager.spawn projectile P
+        //timertast(while ttacking)
+        //each 1.7 second
+        //find target
+        //reduce hp
     }
 
 

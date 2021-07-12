@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Player {
+
     private int elixir;
     private int crown;
     private int elixirRate;
@@ -95,18 +96,15 @@ public class Player {
         Building building = new Building(type,team,location);
         Map.getMap()[(int)location.getX()][(int)location.getY()].setUnit(building);
         Map.getMap()[(int)location.getX()][(int)location.getY()].setCellType(team);
-
-        Game.gameManager().getUnits().add(building);
         buildings.add(building);
     }
 
     public void action(){
 
 
-
         for (Iterator<Troop> it = troops.iterator(); it.hasNext();){
             Troop temp  = it.next();
-            if(temp.getHp()<0){
+            if(temp.getHp()<=0){
                 View.CRView().removeTroop(temp);
                 temp.setState(State.DEAD);
                 Map.getMap()[(int)temp.getCurrentLocation().getX()][(int)temp.getCurrentLocation().getY()].setUnit(null);
@@ -126,7 +124,7 @@ public class Player {
 
         for (Iterator<Building> it = buildings.iterator();it.hasNext();){
             Building temp = it.next();
-            if(temp.getHp()<0){
+            if(temp.getHp()<=0){
                 View.CRView().removeBuilding(temp);
                 temp.setState(State.DEAD);
                 Map.getMap()[(int)temp.getCurrentLocation().getX()][(int)temp.getCurrentLocation().getY()].setUnit(null);
@@ -144,7 +142,7 @@ public class Player {
 
 
         if(kingTower.getState() != State.DEAD){
-            if (kingTower.getHp()<0){
+            if (kingTower.getHp()<=0){
                 kingTower.setState(State.DEAD);
                 clearKingMap();
                 Game.gameManager().updateCrowns(this,3);
@@ -161,7 +159,7 @@ public class Player {
 
         for (QueenTower queenTower : queenTowers){
             if(queenTower.getState() == State.DEAD)continue;
-            if(queenTower.getHp()<0){
+            if(queenTower.getHp()<=0){
                 queenTower.setState(State.DEAD);
                 clearQueenMap(queenTower);
                 Game.gameManager().updateCrowns(this,1);
