@@ -15,6 +15,8 @@ public class Map {
         for(int i = 0;i<32;i++){
             for(int j = 0;j<18;j++){
                 map[i][j] = new Cell(CellType.PATH);
+                map[i][j].setX(i);
+                map[i][j].setY(j);
             }
         }
     }

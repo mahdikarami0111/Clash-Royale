@@ -58,4 +58,24 @@ public  class Unit {
     public int getHp() {
         return hp;
     }
+    public void setHp(int hp) {
+        if (hp < 0)
+            return;
+        this.hp = hp;
+    }
+
+
+
+    public void decreaseHp(int i){
+        int tmp = this.hp - i;
+        if (tmp < 0)
+            tmp = 0;
+        setHp(tmp);
+    }
+
+    public Point2D getCurrentLocation() {
+        return currentLocation;
+    }
+
+
 }

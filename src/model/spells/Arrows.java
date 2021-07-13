@@ -1,9 +1,61 @@
 package model.spells;
 
+import javafx.geometry.Point2D;
+import model.enums.Cell;
+import model.enums.CellType;
+import model.game.sharedRecourses.Map;
+import model.units.Unit;
+
+import java.util.ArrayList;
+
 public class Arrows  {
     private static int damage;
     private static int radius;
+    private static int cost;
+
+    public static void attack(Point2D location, CellType team, ArrayList<Unit> units) {
+        //map length and width
+        //convert cell to point2d( Cell class)
+        Cell[][] map = Map.getMap();
+        int mapLength = 32, mapWidth = 18;
+        if (team == CellType.PLAYER) {
+            for (int i = 0; i < mapLength; i++) {
+                for (int j = 0; j < mapWidth; j++) {
+                    if (map[i][j] != null && map[i][j].getCellType() == CellType.BOT && inRange(location, map[i][j])) {
+                        Unit unit = map[i][j].getUnit();
+                        unit.decreaseHp(damage);
+                    }
+                }
+            }
+        } else if (team == CellType.BOT) {
+            for (int i = 0; i < mapLength; i++) {
+                for (int j = 0; j < mapWidth; j++) {
+                    if (map[i][j] != null && map[i][j].getCellType() == CellType.PLAYER && inRange(location, map[i][j])) {
+                        Unit unit = map[i][j].getUnit();
+                        unit.decreaseHp(damage);
+                    }
+                }
+            }
 
 
-    public static void attack(){}
+        }
+    }
+
+
+
+
+    private static boolean inRange(Point2D location, Point2D enemy){
+        return Math.abs(location.distance(enemy)) <= radius;
+    }
+
+    private static boolean inRange(Point2D location, Cell enemy){
+        Point2D point2D = new Point2D(enemy.getX(), enemy.getY());
+        return inRange(location,point2D);
+    }
+
+
+
+
+
+
 }
