@@ -1,9 +1,6 @@
 package model.units;
 
-import View.CRView;
 import model.enums.*;
-import model.game.GameManager;
-import model.informationObjects.UnitInformation;
 
 import javafx.geometry.Point2D;
 

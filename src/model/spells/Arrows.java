@@ -21,7 +21,7 @@ public class Arrows  {
         if (team == CellType.PLAYER) {
             for (int i = 0; i < mapLength; i++) {
                 for (int j = 0; j < mapWidth; j++) {
-                    if (map[i][j] != null && map[i][j].getCellType() == CellType.BOT && inRange(location, map[i][j])) {
+                    if (map[i][j] != null && map[i][j].getCellType() == CellType.BOT && inRange(location, new Point2D(i,j))) {
                         Unit unit = map[i][j].getUnit();
                         unit.decreaseHp(damage);
                     }
@@ -30,7 +30,7 @@ public class Arrows  {
         } else if (team == CellType.BOT) {
             for (int i = 0; i < mapLength; i++) {
                 for (int j = 0; j < mapWidth; j++) {
-                    if (map[i][j] != null && map[i][j].getCellType() == CellType.PLAYER && inRange(location, map[i][j])) {
+                    if (map[i][j] != null && map[i][j].getCellType() == CellType.PLAYER && inRange(location, new Point2D(i,j))) {
                         Unit unit = map[i][j].getUnit();
                         unit.decreaseHp(damage);
                     }
@@ -48,10 +48,6 @@ public class Arrows  {
         return Math.abs(location.distance(enemy)) <= radius;
     }
 
-    private static boolean inRange(Point2D location, Cell enemy){
-        Point2D point2D = new Point2D(enemy.getX(), enemy.getY());
-        return inRange(location,point2D);
-    }
 
 
 
