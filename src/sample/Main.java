@@ -5,11 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.enums.Cell;
 import model.enums.CellType;
+import model.enums.TargetType;
 import model.game.Player;
 import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.Map;
+import model.game.sharedRecourses.View;
+import model.informationObjects.UnitInformation;
+import view.CRView;
 
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class Main {
@@ -24,19 +31,43 @@ public class Main {
 
 
     public static void main(String[] args) {
-//        launch(args);
-//        Player p1 = new Player(CellType.PLAYER);
-//        Player p2 = new Player(CellType.BOT);
-//        for(int i = 0;i<32;i++){
-//            for(int j = 0;j<18;j++){
-//                if(Map.getMap()[i][j].getCellType() == CellType.PATH && Map.getMap()[i][j].getUnit() == null){
-//                    System.out.print(". ");
-//                }else if(Map.getMap()[i][j].getUnit() != null){
-//                    System.out.print("* ");
-//                }
+//        UnitInformation unitInformation = new UnitInformation(0,0,0.4,0,6,40,TargetType.GROUND,TargetType.BOTH,false,5,1);
+//
+//        int[] hp = {800,880,968,1064,1168};
+//        int[] damage = {20,22,24,26,29};
+//
+//        String name = "INFERNO_TOWER";
+////
+//        for(int  i =1 ; i<6 ; i++){
+//            File file = new File("./src/recourses/UnitInformation/"+name+"/"+i+".ser");
+//            try {
+//                file.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
 //            }
-//            System.out.println();
+//            unitInformation.setHp(hp[i-1]);
+//            unitInformation.setDamage(damage[i-1]);
+//
+//            try {
+//                FileOutputStream fos = new FileOutputStream("./src/recourses/UnitInformation/"+name+"/"+i+".ser");
+//                ObjectOutputStream oos = new ObjectOutputStream(fos);
+//                oos.writeObject(unitInformation);
+//                oos.close();
+//                fos.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            try {
+//                FileInputStream fis = new FileInputStream("./src/recourses/UnitInformation/"+name+"/"+i+".ser");
+//                ObjectInputStream ois = new ObjectInputStream(fis);
+//                UnitInformation u =(UnitInformation) ois.readObject();
+//                u.print();
+//                ois.close();
+//                fis.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 //        }
-
     }
 }

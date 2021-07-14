@@ -1,5 +1,5 @@
 package model.game.sharedRecourses;
-import View.CRView;
+import view.CRView;
 
 public class View {
 

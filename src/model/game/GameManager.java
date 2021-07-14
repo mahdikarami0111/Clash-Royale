@@ -10,6 +10,9 @@ import model.units.Projectile;
 import javafx.geometry.Point2D;
 import model.units.Unit;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
@@ -33,6 +36,7 @@ public class GameManager {
     public GameManager(int lvl){
         unitInformationHashMap = new HashMap<>();
         projectiles = new ArrayList<>();
+        initializeUnitInfo(lvl);
 
         this.lvl = lvl;
         player = new Player(CellType.PLAYER);
@@ -71,6 +75,24 @@ public class GameManager {
 
     public void initializeSpells(){
 
+    }
+
+    public void initializeUnitInfo(int lvl){
+        for (Type type: Type.values()){
+            if(type == Type.RAGE||type == Type.ARROWS|| type==Type.FIREBALL)continue;
+            try {
+                FileInputStream fis = new FileInputStream("./src/recourses/UnitInformation/"+type.name()+"/"+lvl+".ser");
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                UnitInformation u = (UnitInformation) ois.readObject();
+                unitInformationHashMap.put(type,u);
+                System.out.println(type.name());
+                u.print();
+                fis.close();
+                ois.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void spawnTroop(Point2D location, Player player,Type type){

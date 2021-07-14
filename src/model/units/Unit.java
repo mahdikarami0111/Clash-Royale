@@ -1,8 +1,7 @@
 package model.units;
 
-import View.CRView;
 import model.enums.*;
-import model.game.GameManager;
+import model.game.sharedRecourses.Game;
 import model.informationObjects.UnitInformation;
 
 import javafx.geometry.Point2D;
@@ -10,8 +9,8 @@ import javafx.geometry.Point2D;
 public  class Unit {
     private int hp;
     private int damage;
-    private int attackSpeed;
-    private int range;
+    private double attackSpeed;
+    private double range;
     private TargetType unitType;
     private TargetType targetType;
     private boolean areaSplash;
@@ -26,11 +25,12 @@ public  class Unit {
 
 
     public Unit(Type type, CellType team, Point2D location){
-        //set fields to information on unitInformation
+
+
     }
 
     public boolean checkForAttack(){
-        //checks for attack range
+
         return true;
     }
 
@@ -46,6 +46,19 @@ public  class Unit {
         //reduce hp
     }
 
+    public void setData(Type type){
+        UnitInformation info = Game.gameManager().getUnitInformationHashMap().get(type);
+        this.hp = info.hp;
+        this.damage = info.damage;
+        this.attackSpeed = info.attackSpeed;
+        this.range = info.range;
+        this.targetType = info.targetType;
+        this.unitType = info.unitType;
+        this.areaSplash = info.areaSplash;
+        this.cost = info.cost;
+        this.count = info.count;
+
+    }
 
     public CellType getTeam() {
         return team;
