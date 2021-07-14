@@ -75,4 +75,15 @@ public  class Unit {
     public Point2D getCurrentLocation() {
         return currentLocation;
     }
+
+    public void decreaseHp(int i){
+        int tmp = this.hp - i;
+        if (tmp < 0)
+            tmp = 0;
+        setHp(tmp);
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
 }
