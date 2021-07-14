@@ -1,14 +1,16 @@
 package model.units;
 
 import model.enums.*;
+import model.game.sharedRecourses.Game;
+import model.informationObjects.UnitInformation;
 
 import javafx.geometry.Point2D;
 
 public  class Unit {
     private int hp;
     private int damage;
-    private int attackSpeed;
-    private int range;
+    private double attackSpeed;
+    private double range;
     private TargetType unitType;
     private TargetType targetType;
     private boolean areaSplash;
@@ -23,11 +25,12 @@ public  class Unit {
 
 
     public Unit(Type type, CellType team, Point2D location){
-        //set fields to information on unitInformation
+
+
     }
 
     public boolean checkForAttack(){
-        //checks for attack range
+
         return true;
     }
 
@@ -35,14 +38,27 @@ public  class Unit {
         this.state = state;
     }
 
-    public  void attack(){
+    public void attack(){
         state = State.ATTACKING;
-        //find closest enemy and reduce his hp
-        //if range bigger than 1 summon projectile
-        //Projectile p =new Projectile(location,enemy loc,this.type);
-        //gameManager.spawn projectile P
+        //timertast(while ttacking)
+        //each 1.7 second
+        //find target
+        //reduce hp
     }
 
+    public void setData(Type type){
+        UnitInformation info = Game.gameManager().getUnitInformationHashMap().get(type);
+        this.hp = info.hp;
+        this.damage = info.damage;
+        this.attackSpeed = info.attackSpeed;
+        this.range = info.range;
+        this.targetType = info.targetType;
+        this.unitType = info.unitType;
+        this.areaSplash = info.areaSplash;
+        this.cost = info.cost;
+        this.count = info.count;
+
+    }
 
     public CellType getTeam() {
         return team;
@@ -55,24 +71,8 @@ public  class Unit {
     public int getHp() {
         return hp;
     }
-    public void setHp(int hp) {
-        if (hp < 0)
-            return;
-        this.hp = hp;
-    }
-
-
-
-    public void decreaseHp(int i){
-        int tmp = this.hp - i;
-        if (tmp < 0)
-            tmp = 0;
-        setHp(tmp);
-    }
 
     public Point2D getCurrentLocation() {
         return currentLocation;
     }
-
-
 }
