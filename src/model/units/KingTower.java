@@ -1,10 +1,8 @@
 package model.units;
 
 import javafx.geometry.Point2D;
-import model.enums.Cell;
 import model.enums.CellType;
 import model.enums.Type;
-import model.informationObjects.UnitInformation;
 
 public class KingTower extends Unit {
 

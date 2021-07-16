@@ -31,14 +31,15 @@ public class GameManager {
 
     private ArrayList<Projectile> projectiles;
 
-    private ArrayList<Unit> units;
 
     public GameManager(int lvl){
         unitInformationHashMap = new HashMap<>();
         projectiles = new ArrayList<>();
         initializeUnitInfo(lvl);
-
         this.lvl = lvl;
+    }
+
+    public void start(){
         player = new Player(CellType.PLAYER);
         bot = new Player(CellType.BOT);
         timer = 0;
@@ -85,8 +86,6 @@ public class GameManager {
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 UnitInformation u = (UnitInformation) ois.readObject();
                 unitInformationHashMap.put(type,u);
-                System.out.println(type.name());
-                u.print();
                 fis.close();
                 ois.close();
             } catch (Exception e) {
@@ -97,6 +96,7 @@ public class GameManager {
 
     public void spawnTroop(Point2D location, Player player,Type type){
         if(player.getElixir() >= unitInformationHashMap.get(type).cost){
+            player.setElixir(player.getElixir()-unitInformationHashMap.get(type).cost);
             player.summonTroop(type,location);
         }
     }
@@ -104,6 +104,9 @@ public class GameManager {
     public void spawnBuilding(Point2D location, Player player, Type type){
         if(player.getElixir() >= unitInformationHashMap.get(type).cost){
             player.summonBuilding(type,location);
+        }
+        else {
+            System.out.println("not enough exir");
         }
     }
 
@@ -124,9 +127,6 @@ public class GameManager {
         }
     }
 
-    public ArrayList<Unit> getUnits() {
-        return units;
-    }
 
     public int getTimer() {
         return timer;

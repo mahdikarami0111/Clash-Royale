@@ -25,8 +25,10 @@ public  class Unit {
 
 
     public Unit(Type type, CellType team, Point2D location){
-
-
+        setData(type);
+        this.team = team;
+        currentLocation = location;
+        this.type = type;
     }
 
     public boolean checkForAttack(){
@@ -60,6 +62,8 @@ public  class Unit {
 
     }
 
+
+
     public CellType getTeam() {
         return team;
     }
@@ -74,5 +78,13 @@ public  class Unit {
 
     public Point2D getCurrentLocation() {
         return currentLocation;
+    }
+
+    public void decreaseHp(int damage){
+        hp -= damage;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 }

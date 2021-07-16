@@ -2,6 +2,7 @@ package view;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import model.enums.State;
 import model.enums.Type;
 import model.units.Unit;
 
@@ -9,12 +10,42 @@ public class CustomImageview extends ImageView {
     private Image moveR;
     private Image moveL;
     private Image attack;
+    private int size;
+    private int xScale;
+    private int yScale;
 
-    public CustomImageview(Type type){
-        //read unit pictures from file
+    public CustomImageview(MutableImage mutableImage){
+        moveR = mutableImage.getMoveR();
+        moveL = mutableImage.getMoveL();
+        attack = mutableImage.getAttack();
+        this.setPreserveRatio(true);
+        this.setFitWidth(mutableImage.getSizeScale());
+        this.setImage(null);
     }
 
-    public void setAnimation(Unit unit){
+    public void changeState(State state){
+        switch (state){
+            case MOVING_RIGHT:
+                this.setImage(moveR);
+                break;
+            case MOVING_LEFT:
+                this.setImage(moveL);
+                break;
+            case ATTACKING:
+                this.setImage(attack);
+                break;
+        }
+    }
 
+    public int getSize() {
+        return size;
+    }
+
+    public int getxScale() {
+        return xScale;
+    }
+
+    public int getyScale() {
+        return yScale;
     }
 }

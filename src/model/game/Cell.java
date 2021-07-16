@@ -1,5 +1,6 @@
-package model.enums;
+package model.game;
 
+import model.enums.CellType;
 import model.units.Unit;
 
 public class Cell {

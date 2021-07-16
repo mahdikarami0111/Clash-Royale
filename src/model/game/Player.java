@@ -10,6 +10,7 @@ import model.game.sharedRecourses.View;
 import model.units.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class Player {
@@ -29,12 +30,15 @@ public class Player {
         elixirRate = 2;
         this.team = team;
         queenTowers = new QueenTower[2];
+        troops = new ArrayList<>();
+        buildings = new ArrayList<>();
 
         if(team == CellType.PLAYER){
 
             kingTower = new KingTower(CellType.PLAYER,new Point2D(27,7));
             queenTowers[0] = new QueenTower(CellType.PLAYER,new Point2D(26,1));
             queenTowers[1] = new QueenTower(CellType.PLAYER,new Point2D(26,14));
+
 
             for(int i = 0 ; i<4;i++){
                 for(int j = 0;j<4;j++){
@@ -56,7 +60,7 @@ public class Player {
             }
         }
 
-        else if(team == CellType.BOT){
+        else {
             kingTower = new KingTower(team,new Point2D(1,7));
             queenTowers[0] = new QueenTower(team,new Point2D(3,1));
             queenTowers[1] = new QueenTower(team,new Point2D(3,14));
@@ -90,6 +94,7 @@ public class Player {
         Map.getMap()[(int)location.getX()][(int)location.getY()].setUnit(troop);
         Map.getMap()[(int)location.getX()][(int)location.getY()].setCellType(team);
         troops.add(troop);
+        View.CRView().spawnTroop(troop);
     }
 
     public synchronized void summonBuilding(Type type,Point2D location){
@@ -97,6 +102,7 @@ public class Player {
         Map.getMap()[(int)location.getX()][(int)location.getY()].setUnit(building);
         Map.getMap()[(int)location.getX()][(int)location.getY()].setCellType(team);
         buildings.add(building);
+        View.CRView().spawnBuilding(building);
     }
 
     public void action(){
@@ -125,7 +131,9 @@ public class Player {
         for (Iterator<Building> it = buildings.iterator();it.hasNext();){
             Building temp = it.next();
             if(temp.getHp()<=0){
+                System.out.println("b4");
                 View.CRView().removeBuilding(temp);
+                System.out.println("after");
                 temp.setState(State.DEAD);
                 Map.getMap()[(int)temp.getCurrentLocation().getX()][(int)temp.getCurrentLocation().getY()].setUnit(null);
                 Map.getMap()[(int)temp.getCurrentLocation().getX()][(int)temp.getCurrentLocation().getY()].setCellType(CellType.PATH);
@@ -234,4 +242,7 @@ public class Player {
         this.crown = crown;
     }
 
+    public synchronized void setElixir(int elixir) {
+        this.elixir = elixir;
+    }
 }

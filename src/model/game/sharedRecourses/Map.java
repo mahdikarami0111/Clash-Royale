@@ -1,6 +1,6 @@
 package model.game.sharedRecourses;
 
-import model.enums.Cell;
+import model.game.Cell;
 import model.enums.CellType;
 
 public class Map {
@@ -9,12 +9,20 @@ public class Map {
     private Cell[][] map;
 
     private Map(){
-        //temporary map for testing
-        //real map will be read froma file
         map = new Cell[32][18];
         for(int i = 0;i<32;i++){
             for(int j = 0;j<18;j++){
-                map[i][j] = new Cell(CellType.PATH);
+                if(i==15 || i== 16){
+                    if(j==2||j==3||j==14||j==15){
+                        map[i][j] = new Cell(CellType.PATH);
+                    }
+                    else {
+                        map[i][j] = new Cell(CellType.BLOCK);
+                    }
+                }
+                else {
+                    map[i][j] = new Cell(CellType.PATH);
+                }
             }
         }
     }

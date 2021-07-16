@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import model.enums.CellType;
 import model.enums.State;
 import model.enums.Type;
+import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.View;
 
 public class Troop extends Unit {
@@ -15,7 +16,8 @@ public class Troop extends Unit {
 
     public Troop(Type type, CellType team, Point2D location){
         super(type,team,location);
-        //set ms and type
+        movementSpeed = Game.gameManager().getUnitInformationHashMap().get(type).movementSpeed;
+        pixelLocation = new Point2D(getCurrentLocation().getX()*32,getCurrentLocation().getY()*32);
     }
 
     @Override
@@ -38,5 +40,9 @@ public class Troop extends Unit {
         //moves pixels towards dest
         //if pixel location matches destTile -> current = dest & set new dest
         //set status based on movement
+    }
+
+    public Point2D getPixelLocation() {
+        return pixelLocation;
     }
 }
