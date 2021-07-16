@@ -3,11 +3,12 @@ package utils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ProfileHandler {
-    private static  ArrayList<String > usernames = new ArrayList<>();
-    private static  ArrayList<String> passwords = new ArrayList<>();
+
+    private static HashMap<String, String > usernameMap2password = new HashMap<>();
     private static final File file = new File("UnPw.txt");
 
 
@@ -16,15 +17,11 @@ public class ProfileHandler {
     }
 
     public static void update(){
-        try(Scanner read = new Scanner(new FileReader(file));
-            PrintWriter writer = new PrintWriter(new FileWriter(file,true))){
-            usernames.clear();
-            passwords.clear();
+        try(Scanner read = new Scanner(new FileReader(file))){
             while (read.hasNext()){
                 String tmp = read.nextLine();
                 String[] strings = tmp.split(":");
-                usernames.add(strings[0].trim());
-                passwords.add(strings[1].trim());
+                add(strings[0],strings[1]);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -32,31 +29,32 @@ public class ProfileHandler {
     }
 
     public static boolean userNameExists(String s){
-       return usernames.contains(s);
+       return usernameMap2password.containsKey(s);
     }
 
     public static boolean passwordMatch(String un, String pw){
         if (!userNameExists(un))
             return false;
-        int index = 0 ;
-        while (!usernames.get(index).equals(un)){
-            index++;
-        }
-        String s = passwords.get(index);
+        String s = usernameMap2password.get(un.trim());
         return pw.trim().equals(s);
+
     }
 
     public static void addUnPw(String un, String pw){
         if (un.trim().equals("") || pw.trim().equals(""))
             return;
         try(PrintWriter writer = new PrintWriter(new FileWriter(file,true))) {
-            writer.printf("%s:%s\n",un.trim(),pw.trim());
+            writer.printf("%s:%s:%d\n",un.trim(),pw.trim(),1);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
+    public static void add(String un, String pw){
+        if (userNameExists(un)|| un.trim().equals("")|| pw.trim().equals(""))
+            return;
+        usernameMap2password.put(un.trim(),pw.trim());
+    }
 
 
 
