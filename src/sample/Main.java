@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.geometry.Point2D;
@@ -80,6 +81,22 @@ public class Main extends Application {
             FireBall.attack(new Point2D(9,3), CellType.PLAYER);
         });
         b1.setLayoutX(90);
+        b1.setLayoutY(950);
+        View.CRView().getGroup().getChildren().add(b1);
+
+        b1 = new Button("CANNON");
+        b1.setOnAction(e ->{
+            Game.gameManager().spawnBuilding(new Point2D(20,4),Game.gameManager().getPlayer(),Type.CANNON);
+        });
+        b1.setLayoutX(150);
+        b1.setLayoutY(950);
+        View.CRView().getGroup().getChildren().add(b1);
+
+        b1 = new Button("INFERNO");
+        b1.setOnAction(e ->{
+            Game.gameManager().spawnBuilding(new Point2D(20,4),Game.gameManager().getPlayer(), Type.INFERNO_TOWER);
+        });
+        b1.setLayoutX(220);
         b1.setLayoutY(950);
         View.CRView().getGroup().getChildren().add(b1);
 

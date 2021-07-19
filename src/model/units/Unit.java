@@ -101,6 +101,9 @@ public  class Unit {
                 if(range>=2){
                     Game.gameManager().getPlayer(team).summonProjectile(new Projectile(currentLocation,target,type));
                 }
+                if(type == Type.INFERNO_TOWER){
+                    damage += (Game.gameManager().getLvl()+8.5)*0.4;
+                }
             }
         }
     }
