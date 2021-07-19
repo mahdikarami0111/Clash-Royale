@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -7,13 +8,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import model.enums.Type;
+import model.spells.Rage;
 import model.units.Projectile;
 import model.units.Troop;
 import model.units.Unit;
 
+import javafx.geometry.Point2D;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class CRView extends Group {
+public class CRView {
     private Canvas canvas;
     private GraphicsContext gc;
 
@@ -25,10 +30,14 @@ public class CRView extends Group {
     private HashMap<Type,MutableImage> mutableImages;
     private HashMap<Type,Image> staticImages;
 
+    private Group group;
+
     private static final String mapAddress = "";
 
 
-    public CRView(){
+    public CRView(Group group){
+        this.group = group;
+
         troops = new HashMap<>();
         projectiles = new HashMap<>();
         buildings = new HashMap<>();
@@ -38,23 +47,22 @@ public class CRView extends Group {
         staticImages = new HashMap<>();
 
         canvas = new Canvas(576,1024);
-        this.getChildren().add(canvas);
+        this.group.getChildren().add(canvas);
         initializeImages();
         gc = canvas.getGraphicsContext2D();
         drawBackground();
     }
 
     public void removeTroop(Troop troop){
-        this.getChildren().remove(troops.remove(troop));
+        Platform.runLater(() -> group.getChildren().remove(troops.remove(troop)));
     }
 
     public void removeBuilding (Unit unit){
-        ImageView imageView = buildings.get(unit);
-        this.getChildren().remove(imageView);
+        Platform.runLater(() -> group.getChildren().remove(buildings.remove(unit)));
     }
 
     public void removeProjectile(Projectile projectile){
-        this.getChildren().remove(projectiles.remove(projectile));
+        Platform.runLater(() -> group.getChildren().remove(projectiles.remove(projectile)));
     }
 
     public void drawBackground(){
@@ -64,21 +72,27 @@ public class CRView extends Group {
 
     public void spawnTroop(Troop troop){
         CustomImageview customImageview = new CustomImageview(mutableImages.get(troop.type));
-        this.getChildren().add(customImageview);
+        group.getChildren().add(customImageview);
         troops.put(troop,customImageview);
     }
 
     public void spawnProjectile(Projectile projectile){
-        ImageView imageView = new ImageView(projectileImages.get(projectile.getUnitType()));
-        this.getChildren().add(imageView);
-        projectiles.put(projectile,imageView);
+        Platform.runLater(() ->{
+            ImageView imageView = new ImageView(projectileImages.get(projectile.getUnitType()));
+            imageView.setX(projectile.getCurrent().getY());
+            imageView.setY(projectile.getCurrent().getX());
+            imageView.setRotate(projectile.getRotate());
+            group.getChildren().add(imageView);
+            projectiles.put(projectile,imageView);
+        });
     }
+
 
     public void spawnBuilding(Unit unit){
         ImageView imageView = new ImageView(staticImages.get(unit.type));
         imageView.setX(unit.getCurrentLocation().getY()*32);
         imageView.setY(unit.getCurrentLocation().getX()*32);
-        this.getChildren().add(imageView);
+        group.getChildren().add(imageView);
         buildings.put(unit,imageView);
     }
 
@@ -97,6 +111,8 @@ public class CRView extends Group {
         projectileImages.put(Type.BABY_DRAGON,new Image("recourses/View/staticImages/projectiles/BABY_DRAGON.gif"));
         projectileImages.put(Type.INFERNO_TOWER,new Image("recourses/View/staticImages/projectiles/INFERNO_TOWER.gif"));
         projectileImages.put(Type.CANNON,new Image("recourses/View/staticImages/projectiles/CANNON.png"));
+        projectileImages.put(Type.KING_TOWER,new Image("recourses/View/staticImages/projectiles/KING_TOWER.png"));
+        projectileImages.put(Type.QUEEN_TOWER,new Image("recourses/View/staticImages/projectiles/QUEEN_TOWER.png"));
     }
 
     public void initializeStaticImages(){
@@ -104,8 +120,8 @@ public class CRView extends Group {
             if(isMutable(type)||type == Type.FIREBALL||type==Type.RAGE||type==Type.ARROWS)continue;
             staticImages.put(type,new Image("recourses/View/staticImages/nonProjectiles/"+type.name()+".png"));
         }
-        staticImages.put(Type.ARROWS,new Image("recourses/View/staticImages/nonProjectiles/ARROWS.gif"));
-        staticImages.put(Type.FIREBALL,new Image("recourses/View/staticImages/nonProjectiles/FIREBALL.gif"));
+        projectileImages.put(Type.ARROWS,new Image("recourses/View/staticImages/nonProjectiles/ARROWS.gif"));
+        projectileImages.put(Type.FIREBALL,new Image("recourses/View/staticImages/nonProjectiles/FIREBALL.gif"));
         staticImages.put(Type.RAGE,new Image("recourses/View/staticImages/nonProjectiles/RAGE.gif"));
     }
 
@@ -114,13 +130,15 @@ public class CRView extends Group {
     }
 
     public void render(){
-        troops.forEach((troop,image) ->{
-            image.setX((troop.getPixelLocation().getY())+image.getxScale());
-            image.setY((troop.getPixelLocation().getX())+image.getyScale());
-        } );
-        projectiles.forEach((projectile,image) -> {
-            image.setX(projectile.getCurrent().getY());
-            image.setY(projectile.getCurrent().getX());
+        Platform.runLater(() -> {
+            troops.forEach((troop,image) ->{
+                image.setX((troop.getPixelLocation().getY())+image.getxScale());
+                image.setY((troop.getPixelLocation().getX())+image.getyScale());
+            } );
+            projectiles.forEach((projectile,image) -> {
+                image.setX(projectile.getCurrent().getY());
+                image.setY(projectile.getCurrent().getX());
+            });
         });
     }
 
@@ -138,5 +156,34 @@ public class CRView extends Group {
 
     public HashMap<Type, Image> getProjectileImages() {
         return projectileImages;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void rage(Point2D location){
+        ImageView imageView = new ImageView(staticImages.get(Type.RAGE));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                imageView.setX(location.getY()*32-100);
+                imageView.setY(location.getX()*32-100);
+                group.getChildren().add(imageView);
+            }
+        });
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+             Platform.runLater(new Runnable() {
+                 @Override
+                 public void run() {
+                     group.getChildren().remove(imageView);
+                 }
+             });
+            }
+        };
+        Timer t = new Timer();
+        t.schedule(task,2420);
     }
 }

@@ -1,19 +1,20 @@
 package model.spells;
 
 import javafx.geometry.Point2D;
+import model.enums.Type;
 import model.game.Cell;
 import model.enums.CellType;
+import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.Map;
+import model.units.Projectile;
 import model.units.Unit;
 
 public class Arrows  {
     private static int damage;
-    private static double radius;
-    private static int cost;
+    private static double radius = 4;
+    private static int cost = 3;
 
     public static void attack(Point2D location, CellType team) {
-        //map length and width
-        //convert cell to point2d( Cell class)
         Cell[][] map = Map.getMap();
         int mapLength = 32, mapWidth = 18;
         if (team == CellType.PLAYER) {
@@ -34,13 +35,13 @@ public class Arrows  {
                     }
                 }
             }
-
-
         }
+        Game.gameManager().getPlayer(team).summonProjectile(new Projectile(location.add(-9,-8),location.add(-4,-3), Type.ARROWS));
     }
 
-
-
+    public static void setDamage(int damage) {
+        Arrows.damage = damage;
+    }
 
     private static boolean inRange(Point2D location, Point2D enemy){
         return Math.abs(location.distance(enemy)) <= radius;

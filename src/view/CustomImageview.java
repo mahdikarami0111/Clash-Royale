@@ -18,8 +18,11 @@ public class CustomImageview extends ImageView {
         moveR = mutableImage.getMoveR();
         moveL = mutableImage.getMoveL();
         attack = mutableImage.getAttack();
+        this.size = mutableImage.getSizeScale();
+        xScale = mutableImage.getxScale();
+        yScale = mutableImage.getyScale();
         this.setPreserveRatio(true);
-        this.setFitWidth(mutableImage.getSizeScale());
+        this.setFitWidth(size);
         this.setImage(null);
     }
 

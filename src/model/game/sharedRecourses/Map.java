@@ -33,4 +33,17 @@ public class Map {
         }
         return instance.map;
     }
+
+    public void print(){
+        for(int i = 0;i<32;i++){
+            for(int j = 0;j<18;j++){
+                Cell cell = Map.getMap()[i][j];
+                if(cell.getCellType()==CellType.BOT)System.out.print("B");
+                if(cell.getCellType()==CellType.PLAYER)System.out.print("P");
+                if(cell.getCellType()==CellType.PATH)System.out.print("O");
+                if(cell.getCellType()==CellType.BLOCK)System.out.print("X");
+            }
+            System.out.println();
+        }
+    }
 }

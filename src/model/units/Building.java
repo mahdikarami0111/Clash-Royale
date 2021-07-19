@@ -10,24 +10,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Building extends Unit{
-    private int lifespan;
+    private long lifespan;
 
     public Building(Type type, CellType team, Point2D location){
         super(type,team,location);
-//        this.lifespan = Game.gameManager().getUnitInformationHashMap().get(type).lifespan;
-        this.lifespan = 5;
-        timer();
+        this.lifespan = 1000L *Game.gameManager().getUnitInformationHashMap().get(type).lifespan;
+
     }
 
-    public void timer(){
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                setHp(0);
-                System.out.println("DETONATED");
-            }
-        };
-        Timer t = new Timer();
-        t.schedule(task,lifespan* 1000L);
+    public void tick(){
+        lifespan -= 30;
+        if(lifespan <= 0){
+            this.hp = 0;
+        }
     }
+
 }

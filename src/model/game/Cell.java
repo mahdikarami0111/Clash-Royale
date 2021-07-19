@@ -12,19 +12,19 @@ public class Cell {
         this.cellType = cellType;
     }
 
-    public Unit getUnit() {
+    public synchronized Unit getUnit() {
         return unit;
     }
 
-    public CellType getCellType() {
+    public  synchronized CellType getCellType() {
         return cellType;
     }
 
-    public void setUnit(Unit unit) {
+    public synchronized void setUnit(Unit unit) {
         this.unit = unit;
     }
 
-    public void setCellType(CellType cellType) {
+    public synchronized void setCellType(CellType cellType) {
         this.cellType = cellType;
     }
 }
