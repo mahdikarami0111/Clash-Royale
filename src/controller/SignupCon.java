@@ -8,7 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import utils.Account;
 import utils.ProfileHandler;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 
 public class SignupCon {
@@ -40,30 +44,38 @@ public class SignupCon {
 
     @FXML
     void signUp(ActionEvent event) {
-        String un,pw,cPw;
-        un = userName.getText();
-        pw = password.getText();
-        cPw = confirmPassword.getText();
-        if(ProfileHandler.userNameExists(un) || un == null || pw == null || cPw == null){
+        ProfileHandler.initialize();
+        HashMap<String , Account> map = ProfileHandler.getUsernameMap2Account();
+        String un = userName.getText().trim();
+        String pw = password.getText().trim();
+        String cpw = confirmPassword.getText().trim();
+
+        if (un.equals("") || pw.equals("") || cpw.equals("") || ProfileHandler.usernameExists(un) || !(cpw.equals(pw))){
             showPrompt();
             clearFields();
             return;
         }
 
-        if ( (!pw.equals(cPw))){
-            try {
-               showPrompt();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            clearFields();
-            System.out.println(ProfileHandler.userNameExists(un));
-            return;
+        Account account = new Account(un, pw);
+        ProfileHandler.addAccount(account);
+        ProfileHandler.writeAccounts();
+        Stage stage = (Stage) userName.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../view/menu.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        ProfileHandler.addUnPw(un,pw);
-        ProfileHandler.update();
-
+        Parent root = loader.getRoot();
+        MenuCon menuCon = loader.getController();
+        menuCon.setAccount(account);
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.setTitle("menu");
+        stage.show();
     }
+
 
 
     private void showPrompt(){

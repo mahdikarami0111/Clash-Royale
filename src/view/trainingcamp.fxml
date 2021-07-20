@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TrainingCampCon">
+   <children>
+      <VBox layoutY="10.0" prefHeight="500.0" prefWidth="900.0">
+         <children>
+            <HBox prefHeight="250.0" prefWidth="200.0" style="-fx-border-color: red; -fx-border-width: 2;">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/ArchersCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b0" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/ArrowsCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b1" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 0;">
+                     <children>
+                        <ImageView fitHeight="188.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/BabyDragonCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b2" mnemonicParsing="false" prefHeight="53.0" prefWidth="150.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/BarbariansCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b3" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/CannonCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b4" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/FireballCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b5" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="250.0" prefWidth="200.0" style="-fx-border-color: red; -fx-border-width: 2;">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/GiantCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b6" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/InfernoTowerCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b7" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 8;">
+                     <children>
+                        <ImageView fitHeight="204.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/pekka.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b8" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/RageCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b9" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 8;">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/ValkyrieCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b10" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 8;">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/WizardCard.png" />
+                           </image>
+                        </ImageView>
+                        <ToggleButton fx:id="b11" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Hyperlink fx:id="menu" alignment="CENTER" layoutX="14.0" layoutY="525.0" onAction="#goBack" prefHeight="51.0" prefWidth="207.0" style="-fx-border-color: aqua; -fx-border-width: 2;" text="menu">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Hyperlink>
+      <Button fx:id="confirmation" layoutX="260.0" layoutY="525.0" mnemonicParsing="false" onAction="#confirm" prefHeight="51.0" prefWidth="485.0" text="confirm">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

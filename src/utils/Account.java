@@ -1,8 +1,9 @@
 package utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Account {
+public class Account implements Serializable {
     private String username;
     private String passWord;
     private int level;
@@ -15,6 +16,11 @@ public class Account {
         this.level = 1;
         this.xp = 0;
         history = new ArrayList<>();
+    }
+
+    public Account(String username, String passWord, int lvl){
+        this(username, passWord);
+        this.setLevel(lvl);
     }
 
     public String getUsername() {
@@ -56,4 +62,20 @@ public class Account {
     public void setHistory(ArrayList<History> history) {
         this.history = history;
     }
+
+    @Override
+    public String toString(){
+        return String.format("userName: %s , passWord: %s , level: %d",username,passWord,level);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Account)) return false;
+
+        Account account = (Account) o;
+
+        return getUsername().equals(account.getUsername());
+    }
+
 }

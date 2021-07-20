@@ -32,18 +32,41 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PromptCon">
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="405.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuCon">
    <children>
-      <Button fx:id="button" layoutX="143.0" layoutY="77.0" mnemonicParsing="false" onAction="#ok" prefHeight="35.0" prefWidth="49.0" text="OK" />
-      <Label layoutX="2.0" layoutY="6.0" prefHeight="62.0" prefWidth="331.0" text="  invalid username or password" textAlignment="CENTER">
+      <Hyperlink fx:id="profile" alignment="CENTER" onAction="#changeScene" prefHeight="71.0" prefWidth="417.0" style="-fx-border-color: red; -fx-border-width: 4;" text="Profile">
          <font>
-            <Font name="System Bold Italic" size="22.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
-      </Label>
+      </Hyperlink>
+      <Hyperlink fx:id="battleDeck" alignment="CENTER" onAction="#changeScene" prefHeight="69.0" prefWidth="411.0" style="-fx-border-color: red; -fx-border-width: 4;" text="Battle Deck">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Hyperlink>
+      <Hyperlink fx:id="battleHistory" alignment="CENTER" onAction="#changeScene" prefHeight="69.0" prefWidth="411.0" style="-fx-border-color: red; -fx-border-width: 4;" text="Battle History">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Hyperlink>
+      <Hyperlink fx:id="tariningCamp" alignment="CENTER" onAction="#changeScene" prefHeight="69.0" prefWidth="411.0" style="-fx-border-color: red; -fx-border-width: 4;" text="Training Camp">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Hyperlink>
+      <Hyperlink fx:id="exit" alignment="CENTER" onAction="#changeScene" prefHeight="38.0" prefWidth="84.0" style="-fx-background-color: yellow;" text="exit">
+         <VBox.margin>
+            <Insets left="151.0" top="5.0" />
+         </VBox.margin>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Hyperlink>
    </children>
-</AnchorPane>
+</VBox>
