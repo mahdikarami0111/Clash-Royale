@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -80,23 +81,40 @@ public class GameController implements Initializable {
         c3.setImage(images.get(cardManager.getCards()[3]));
         c4.setImage(images.get(cardManager.getCards()[4]));
         Game.gameManager().start();
-        Task task = new Task() {
+//        Task task = new Task() {
+//            @Override
+//            protected Object call() {
+//                while (!Game.gameManager().gameOver()){
+//                    Game.gameManager().tick();
+//                    View.CRView().render();
+//                    try {
+//                        Thread.sleep(30);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                System.out.println("game over");
+//                return null;
+//            }
+//        };
+//        new Thread(task).start();
+        Timer t = new Timer();
+        TimerTask task = new TimerTask() {
             @Override
-            protected Object call() {
-                while (!Game.gameManager().gameOver()){
-                    Game.gameManager().tick();
-                    View.CRView().render();
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(Game.gameManager().gameOver()){
+                            t.cancel();
+                        }
+                        Game.gameManager().tick();
+                        View.CRView().render();
                     }
-                }
-                System.out.println("game over");
-                return null;
+                });
             }
         };
-        new Thread(task).start();
+        t.schedule(task,0,30);
     }
 
 

@@ -309,7 +309,7 @@ public class Troop extends Unit {
 
     @Override
     public void attack(){
-        if(!hasReached()){
+        if(!hasReached() && step != null){
             pixelLocation = pixelLocation.add(step);
             return;
         }

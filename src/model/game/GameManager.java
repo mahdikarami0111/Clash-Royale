@@ -179,6 +179,7 @@ public class GameManager {
     }
 
     public boolean isLocationValid(Point2D location,CellType team){
+        if(location.getY()==0 || location.getY()==1 || location.getY()==16 || location.getY()==17)return false;
         if(Map.getMap()[(int) location.getX()][(int) location.getY()].getCellType() != CellType.PATH)return false;
         if(team == CellType.PLAYER){
 
