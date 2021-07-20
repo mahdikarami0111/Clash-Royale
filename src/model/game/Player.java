@@ -26,9 +26,9 @@ public class Player {
     private ArrayList<Projectile> projectiles;
 
     public Player(CellType team){
-        elixir = 0;
+        elixir = 4;
         crown = 0;
-        elixirRate = 2;
+        elixirRate = 1;
         this.team = team;
         queenTowers = new QueenTower[2];
         troops = new ArrayList<>();
@@ -112,7 +112,7 @@ public class Player {
         View.CRView().spawnProjectile(projectile);
     }
 
-    public void action(){
+    public synchronized void action(){
 
 
         for (Iterator<Troop> it = troops.iterator(); it.hasNext();){

@@ -57,4 +57,8 @@ public class Rage {
         Timer t = new Timer();
         t.schedule(task,(long) duration*1000);
     }
+
+    public static int getCost() {
+        return cost;
+    }
 }

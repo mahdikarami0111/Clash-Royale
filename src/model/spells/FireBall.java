@@ -49,4 +49,8 @@ public class FireBall{
     public static void setDamage(int damage) {
         FireBall.damage = damage;
     }
+
+    public static int getCost() {
+        return cost;
+    }
 }

@@ -171,7 +171,6 @@ public  class Unit {
     }
 
     public void setAttackSpeed(double attackSpeed) {
-        System.out.println("changed");
         this.attackSpeed = attackSpeed;
     }
 }

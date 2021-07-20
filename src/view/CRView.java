@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -29,6 +31,11 @@ public class CRView {
     private HashMap<Type, Image> projectileImages;
     private HashMap<Type,MutableImage> mutableImages;
     private HashMap<Type,Image> staticImages;
+
+    private TextField elixir;
+    private TextField playerCrown;
+    private TextField botCrown;
+    private TextField timer;
 
     private Group group;
 
@@ -185,5 +192,61 @@ public class CRView {
         };
         Timer t = new Timer();
         t.schedule(task,2420);
+    }
+
+    public void start(){
+
+    }
+
+    public void setElixir(TextField elixir) {
+        this.elixir = elixir;
+    }
+
+    public void setPlayerCrown(TextField playerCrown) {
+        this.playerCrown = playerCrown;
+    }
+
+    public void setBotCrown(TextField botCrown) {
+        this.botCrown = botCrown;
+    }
+
+    public void setTimer(TextField timer) {
+        this.timer = timer;
+    }
+
+    public void updateTimer(int time){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                timer.setText(""+time/60+":"+time%60);
+            }
+        });
+    }
+
+    public void updateElixir(int elixirCount){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                elixir.setText(elixirCount+"");
+            }
+        });
+    }
+
+    public void updateBotCrown(int count){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                botCrown.setText(count+"");
+            }
+        });
+    }
+
+    public void updatePlayerCrown(int count){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                playerCrown.setText(count+"");
+            }
+        });
     }
 }

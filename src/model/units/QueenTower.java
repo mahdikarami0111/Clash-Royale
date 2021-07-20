@@ -22,7 +22,7 @@ public class QueenTower extends Unit{
 
 
     @Override
-    public synchronized void attack(){
+    public void attack(){
         if(state != State.ATTACKING){
             setState(State.ATTACKING);
         }

@@ -1,9 +1,12 @@
 package model.game;
 
+import javafx.application.Platform;
 import model.enums.CellType;
 import model.enums.State;
 import model.enums.Type;
+import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.Map;
+import model.game.sharedRecourses.View;
 import model.informationObjects.UnitInformation;
 import model.spells.Arrows;
 import model.spells.FireBall;
@@ -13,6 +16,7 @@ import model.units.Projectile;
 
 import javafx.geometry.Point2D;
 import model.units.Unit;
+import view.CRView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +34,9 @@ public class GameManager {
     private Player bot;
 
     private HashMap<Type, UnitInformation> unitInformationHashMap;
+
+    private ArrayList<Type> deck;
+
 
 
 
@@ -53,6 +60,7 @@ public class GameManager {
             @Override
             public void run() {
                 timer++;
+                View.CRView().updateTimer(timer);
             }
         };
         Timer t = new Timer();
@@ -64,15 +72,20 @@ public class GameManager {
             @Override
             public void run() {
                 if(timer>=120){
-                    player.setElixirRate(4);
-                    bot.setElixirRate(4);
+                    player.setElixirRate(2);
+                    bot.setElixirRate(2);
                 }
-                player.addElixir();
-                bot.addElixir();
+                if(player.getElixir()<10){
+                    player.addElixir();
+                    View.CRView().updateElixir(player.getElixir());
+                }
+                if(bot.getElixir()<10){
+                    bot.addElixir();
+                }
             }
         };
         Timer t = new Timer();
-        t.schedule(task,0,1000);
+        t.schedule(task,0,2000);
     }
 
 
@@ -92,40 +105,48 @@ public class GameManager {
         }
     }
 
-    public void spawnTroop(Point2D location, Player player,Type type){
+    public boolean spawnTroop(Point2D location, Player player,Type type){
         if(player.getElixir() >= unitInformationHashMap.get(type).cost){
             if(unitInformationHashMap.get(type).count == 1 && isLocationValid(location,player.getTeam())){
                 player.setElixir(player.getElixir()-unitInformationHashMap.get(type).cost);
                 player.summonTroop(type,location);
+                return true;
             }
             else if(unitInformationHashMap.get(type).count > 1 && isLocationValid(location,player.getTeam())){
                 ArrayList<Point2D> points = findLocations(player.getTeam(),unitInformationHashMap.get(type).count,location);
-                if (points.size() !=unitInformationHashMap.get(type).count)return;
+                if (points.size() !=unitInformationHashMap.get(type).count)return false;
                 player.setElixir(player.getElixir()-unitInformationHashMap.get(type).cost);
                 for (Point2D point2D : points){
                     player.summonTroop(type,point2D);
                 }
+                return true;
             }
-        }
+        }return false;
     }
 
-    public void spawnBuilding(Point2D location, Player player, Type type){
+    public boolean spawnBuilding(Point2D location, Player player, Type type){
         if(player.getElixir() >= unitInformationHashMap.get(type).cost){
             player.summonBuilding(type,location);
+            player.setElixir(player.getElixir()-unitInformationHashMap.get(type).cost);
+            return true;
         }
+        return false;
     }
 
 
     public void tick(){
         player.action();
         bot.action();
+        dumbBot();
     }
 
     public void updateCrowns(Player p, int crowns){
         if(p.getTeam() == CellType.PLAYER){
             bot.setCrown(bot.getCrown()+crowns);
+            View.CRView().updateBotCrown(bot.getCrown());
         }else {
             player.setCrown(player.getCrown()+crowns);
+            View.CRView().updatePlayerCrown(bot.getCrown());
         }
     }
 
@@ -230,5 +251,71 @@ public class GameManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean rage(CellType team,Point2D location){
+        if(getPlayer(team).getElixir()>=Rage.getCost()){
+            Rage.attack(location,team);
+            getPlayer(team).setElixir(getPlayer(team).getElixir()-Rage.getCost());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean fireball(CellType team, Point2D location){
+        if(getPlayer(team).getElixir()>= FireBall.getCost()){
+            FireBall.attack(location,team);
+            getPlayer(team).setElixir(getPlayer(team).getElixir()-FireBall.getCost());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean arrows(CellType team,Point2D location){
+        if(getPlayer(team).getElixir()>=Arrows.getCost()){
+            Arrows.attack(location,team);
+            getPlayer(team).setElixir(getPlayer(team).getElixir()-Arrows.getCost());
+            return true;
+        }
+        return false;
+    }
+
+    public void setDeck(ArrayList<Type> deck) {
+        this.deck = deck;
+    }
+
+    public void dumbBot(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(bot.getElixir()>6){
+                    Random random = new Random();
+                    Point2D location = new Point2D(10,random.nextInt(8)+4);
+                    Type t = deck.get(random.nextInt(8));
+                    if(t == Type.RAGE){
+                        Game.gameManager().rage(CellType.PLAYER,location);
+                    }
+                    else if(t == Type.FIREBALL){
+                        Game.gameManager().fireball(CellType.PLAYER,location);
+                    }
+                    else if(t == Type.ARROWS){
+                        Game.gameManager().arrows(CellType.PLAYER,location);
+                    }
+                    else if(View.CRView().isMutable(t)){
+                        Game.gameManager().spawnTroop(location,bot,t);
+                    }
+                    else if(t == Type.CANNON){
+                        Game.gameManager().spawnBuilding(location,bot,t);
+                    }
+                    else if(t == Type.INFERNO_TOWER){
+                        Game.gameManager().spawnBuilding(location,bot,t);
+                    }
+                }
+            }
+        });
+    }
+
+    public boolean gameOver(){
+        return player.getKingTower().getState() == State.DEAD || bot.getKingTower().getState() == State.DEAD || timer >= 180;
     }
 }

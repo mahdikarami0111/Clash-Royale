@@ -10,6 +10,8 @@ import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.Map;
 import model.game.sharedRecourses.View;
 
+import java.util.ArrayList;
+
 public class Troop extends Unit {
 
     private Point2D pixelLocation;
@@ -337,12 +339,15 @@ public class Troop extends Unit {
             }
             if(target != null){
                 if(areaSplash){
+                    ArrayList<Unit> units = new ArrayList<>();
                     for(int i =(int) target.getX()-1;i<target.getX()+2;i++){
                         for(int j =(int) target.getY()-1;j<target.getY()+2;j++){
                             CellType t = Map.getMap()[i][j].getCellType();
                             Unit unit = Map.getMap()[i][j].getUnit();
                             if(t != team && t != CellType.BLOCK && t != CellType.PATH &&unit != null && attackTypeMatch(unit)){
+                                if(units.contains(unit))continue;
                                 unit.decreaseHp(damage);
+                                units.add(unit);
                             }
                         }
                     }
@@ -352,7 +357,6 @@ public class Troop extends Unit {
                 }
                 if(range>=2){
                     Game.gameManager().getPlayer(team).summonProjectile(new Projectile(currentLocation,target,type));
-                    System.out.println(currentLocation);
                 }
             }
         }

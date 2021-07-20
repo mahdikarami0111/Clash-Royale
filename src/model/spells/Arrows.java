@@ -46,4 +46,8 @@ public class Arrows  {
     private static boolean inRange(Point2D location, Point2D enemy){
         return Math.abs(location.distance(enemy)) <= radius;
     }
+
+    public static int getCost() {
+        return cost;
+    }
 }
