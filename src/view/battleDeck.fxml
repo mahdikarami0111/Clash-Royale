@@ -42,17 +42,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TrainingCampCon">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BattleDeckCon">
    <children>
       <VBox layoutY="10.0" prefHeight="500.0" prefWidth="900.0">
          <children>
-            <HBox prefHeight="250.0" prefWidth="200.0" style="-fx-border-color: red; -fx-border-width: 2;">
+            <HBox prefHeight="250.0" prefWidth="200.0" style="-fx-border-color: #ff0000; -fx-border-width: 2;">
                <children>
                   <VBox prefHeight="200.0" prefWidth="150.0">
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/ArchersCard.png" />
+                              <Image url="@icons/ArchersCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b0" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -62,7 +62,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/ArrowsCard.png" />
+                              <Image url="@icons/ArrowsCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b1" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -72,7 +72,7 @@
                      <children>
                         <ImageView fitHeight="188.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/BabyDragonCard.png" />
+                              <Image url="@icons/BabyDragonCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b2" mnemonicParsing="false" prefHeight="53.0" prefWidth="150.0" text="select" />
@@ -82,7 +82,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/BarbariansCard.png" />
+                              <Image url="@icons/BarbariansCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b3" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -92,7 +92,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/CannonCard.png" />
+                              <Image url="@icons/CannonCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b4" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -100,9 +100,9 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="150.0">
                      <children>
-                        <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView disable="true" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/FireballCard.png" />
+                              <Image url="@icons/FireballCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b5" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -116,7 +116,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/GiantCard.png" />
+                              <Image url="@icons/GiantCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b6" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -126,7 +126,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/InfernoTowerCard.png" />
+                              <Image url="@icons/InfernoTowerCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b7" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -136,7 +136,7 @@
                      <children>
                         <ImageView fitHeight="204.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/pekka.png" />
+                              <Image url="@icons/pekka.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b8" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -146,7 +146,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/RageCard.png" />
+                              <Image url="@icons/RageCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b9" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -156,7 +156,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/ValkyrieCard.png" />
+                              <Image url="@icons/ValkyrieCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b10" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />
@@ -166,7 +166,7 @@
                      <children>
                         <ImageView fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../icons/WizardCard.png" />
+                              <Image url="@icons/WizardCard.png" />
                            </image>
                         </ImageView>
                         <ToggleButton fx:id="b11" mnemonicParsing="false" prefHeight="51.0" prefWidth="152.0" text="select" />

@@ -61,9 +61,15 @@ public class MenuCon {
                 e.printStackTrace();
             }
             Parent root = loader.getRoot();
+            BattleDeckCon battleDeckCon = loader.getController();
+            battleDeckCon.setAccount(account);
+            battleDeckCon.initArr();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("battle deck");
+            stage.setResizable(false);
+            stage.setX(250);
+            stage.setY(150);
             stage.show();
         }else if(event.getSource() == battleHistory){
             loader.setLocation(getClass().getResource("../view/battleHistory1.fxml"));
