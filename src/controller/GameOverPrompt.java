@@ -10,6 +10,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.enums.CellType;
 import model.game.sharedRecourses.Game;
+import model.game.sharedRecourses.Map;
+import model.game.sharedRecourses.View;
 import model.utils.History;
 import model.utils.ProfileHandler;
 
@@ -70,6 +72,9 @@ public class GameOverPrompt {
         });
         window.setScene(new Scene(root,200,150));
         window.showAndWait();
+        Game.setGamInstance(null);
+        View.setViewInstance(null);
+        Map.setInstance(null);
         return menu;
     }
 }

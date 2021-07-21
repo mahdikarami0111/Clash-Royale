@@ -123,8 +123,10 @@ public class GameController implements Initializable {
                                 stage.close();
                             }
                         }
-                        Game.gameManager().tick();
-                        View.CRView().render();
+                        if(Game.getGamInstance() != null && View.getViewInstance()!= null){
+                            Game.gameManager().tick();
+                            View.CRView().render();
+                        }
                     }
                 });
             }

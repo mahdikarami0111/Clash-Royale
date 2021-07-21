@@ -19,4 +19,12 @@ public class View {
     public static CRView CRView(){
         return viewInstance.view;
     }
+
+    public static void setViewInstance(View viewInstance) {
+        View.viewInstance = viewInstance;
+    }
+
+    public static View getViewInstance() {
+        return viewInstance;
+    }
 }

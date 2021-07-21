@@ -58,6 +58,7 @@ public class SignupCon {
 
         Account account = new Account(un, pw);
         ProfileHandler.addAccount(account);
+        ProfileHandler.setCurrentUser(account);
         ProfileHandler.writeAccounts();
         Stage stage = (Stage) userName.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();

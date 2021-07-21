@@ -19,4 +19,12 @@ public class Game {
     public static GameManager gameManager(){
         return gamInstance.gameManager;
     }
+
+    public static void setGamInstance(Game gamInstance) {
+        Game.gamInstance = gamInstance;
+    }
+
+    public static Game getGamInstance() {
+        return gamInstance;
+    }
 }

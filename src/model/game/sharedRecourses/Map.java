@@ -46,4 +46,8 @@ public class Map {
             System.out.println();
         }
     }
+
+    public static void setInstance(Map instance) {
+        Map.instance = instance;
+    }
 }

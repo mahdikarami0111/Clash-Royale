@@ -56,35 +56,50 @@ public class GameManager {
     }
 
     public void startTimer(){
+        Timer t = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                timer++;
-                View.CRView().updateTimer(timer);
+                if(Game.getGamInstance() == null){
+                    t.cancel();
+                }
+                try {
+                    timer++;
+                    View.CRView().updateTimer(timer);
+                }catch (NullPointerException e){
+
+                }
+
             }
         };
-        Timer t = new Timer();
         t.schedule(task,0,1000);
     }
 
     public void elixirMaker(){
+        Timer t = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if(timer>=120){
-                    player.setElixirRate(2);
-                    bot.setElixirRate(2);
+                if(Game.getGamInstance() == null){
+                    t.cancel();
                 }
-                if(player.getElixir()<10){
-                    player.addElixir();
-                    View.CRView().updateElixir(player.getElixir());
-                }
-                if(bot.getElixir()<10){
-                    bot.addElixir();
+                try {
+                    if(timer>=120){
+                        player.setElixirRate(2);
+                        bot.setElixirRate(2);
+                    }
+                    if(player.getElixir()<10){
+                        player.addElixir();
+                        View.CRView().updateElixir(player.getElixir());
+                    }
+                    if(bot.getElixir()<10){
+                        bot.addElixir();
+                    }
+                }catch (NullPointerException r){
+
                 }
             }
         };
-        Timer t = new Timer();
         t.schedule(task,0,2000);
     }
 
