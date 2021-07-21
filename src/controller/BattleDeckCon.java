@@ -121,6 +121,21 @@ public class BattleDeckCon {
                     break;
             }
         }
+        Stage stage = (Stage) menu.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../view/trainingCamp.fxml"));
+        try {
+            loader.load();
+            TrainingCampCon trainingCampCon =  loader.getController();
+            trainingCampCon.setCards(cards);
+            trainingCampCon.setAccount(account);
+            stage.setScene(new Scene(loader.getRoot()));
+            stage.setTitle("training camp");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

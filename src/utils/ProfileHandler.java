@@ -1,6 +1,8 @@
 package utils;
 //not complete
 
+import model.enums.Type;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +10,9 @@ import java.util.Scanner;
 
 public class ProfileHandler {
     private static HashMap<String , Account> usernameMap2Account;
+    private static Account currentUser;
+    private static int level;
+    private static ArrayList<Type> cards;
 
     public static HashMap<String, Account> getUsernameMap2Account() throws NullPointerException {
         if (usernameMap2Account == null)
@@ -52,4 +57,27 @@ public class ProfileHandler {
         }
     }
 
+    public static Account getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(Account currentUser) {
+        ProfileHandler.currentUser = currentUser;
+    }
+
+    public static int getLevel() {
+        return level;
+    }
+
+    public static void setLevel(int level) {
+        ProfileHandler.level = level;
+    }
+
+    public static ArrayList<Type> getCards() {
+        return cards;
+    }
+
+    public static void setCards(ArrayList<Type> cards) {
+        ProfileHandler.cards = cards;
+    }
 }

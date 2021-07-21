@@ -74,6 +74,7 @@ public class LoginCon {
         Parent parent = loader.getRoot();
         MenuCon menuCon = loader.getController();
         menuCon.setAccount(a);
+        ProfileHandler.setCurrentUser(a);
         stage.setScene(new Scene(parent));
         stage.setResizable(false);
         stage.setTitle("menu");

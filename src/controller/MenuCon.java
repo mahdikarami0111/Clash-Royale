@@ -3,9 +3,11 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -98,6 +100,9 @@ public class MenuCon {
                 e.printStackTrace();
             }
             Parent root = loader.getRoot();
+            TrainingCampCon con = loader.getController();
+            if (con.getCards() == null || con.getCards().size() == 0)
+                return;
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("training camp");

@@ -20,6 +20,12 @@ import java.util.TimerTask;
 
 public class GameManager {
 
+    private int difficulty;
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
     private int timer;
 
     private int lvl;
