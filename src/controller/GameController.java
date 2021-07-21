@@ -4,12 +4,15 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -24,8 +27,10 @@ import model.enums.Type;
 import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.View;
 import model.units.KingTower;
+import model.utils.ProfileHandler;
 import view.CRView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -86,23 +91,6 @@ public class GameController implements Initializable {
         c3.setImage(images.get(cardManager.getCards()[3]));
         c4.setImage(images.get(cardManager.getCards()[4]));
         Game.gameManager().start();
-//        Task task = new Task() {
-//            @Override
-//            protected Object call() {
-//                while (!Game.gameManager().gameOver()){
-//                    Game.gameManager().tick();
-//                    View.CRView().render();
-//                    try {
-//                        Thread.sleep(30);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                System.out.println("game over");
-//                return null;
-//            }
-//        };
-//        new Thread(task).start();
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
             @Override
@@ -112,7 +100,28 @@ public class GameController implements Initializable {
                     public void run() {
                         if(Game.gameManager().gameOver()){
                             t.cancel();
-                            GameOverPrompt.show();
+                            boolean answer = GameOverPrompt.show();
+                            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                            if(answer){
+                                FXMLLoader loader = new FXMLLoader();
+                                loader.setLocation(getClass().getResource("../view/menu.fxml"));
+                                try {
+                                    loader.load();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                MenuCon menuCon = loader.getController();
+                                if (ProfileHandler.getCurrentUser() != null)
+                                    menuCon.setAccount(ProfileHandler.getCurrentUser());
+                                stage.setTitle("menu");
+                                stage.setResizable(false);
+                                stage.setScene(new Scene(loader.getRoot()));
+                                stage.show();
+                            }
+                            if(!answer){
+                                stage.close();
+                            }
                         }
                         Game.gameManager().tick();
                         View.CRView().render();
@@ -130,9 +139,9 @@ public class GameController implements Initializable {
     }
 
     public void setGameManager(int lvl, int botDifficulty){
-        Game.gameManager().setBotDiffculty(botDifficulty);
         Game.initGameManager(lvl);
         Game.gameManager().setDeck(deck);
+        Game.gameManager().setBotDiffculty(botDifficulty);
     }
 
     public void setView(){

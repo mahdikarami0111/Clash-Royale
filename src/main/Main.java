@@ -111,27 +111,27 @@ public class Main extends Application {
 
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../view/fxml/Game.fxml"));
+        loader.setLocation(getClass().getResource("../view/login.fxml"));
         Parent root = loader.load();
-        GameController gc = loader.getController();
-        ArrayList<Type> deck = new ArrayList<>();
-        deck.add(Type.BARBARIAN);
-        deck.add(Type.VALKYRIE);
-        deck.add(Type.ARCHER);
-        deck.add(Type.WIZARD);
-        deck.add(Type.CANNON);
-        deck.add(Type.RAGE);
-        deck.add(Type.BABY_DRAGON);
-        deck.add(Type.MINI_PEKKA);
-
-
-        gc.setDeck(deck);
-        gc.setGameManager(1,1);
-        gc.setView();
+//        GameController gc = loader.getController();
+//        ArrayList<Type> deck = new ArrayList<>();
+//        deck.add(Type.BARBARIAN);
+//        deck.add(Type.VALKYRIE);
+//        deck.add(Type.ARCHER);
+//        deck.add(Type.WIZARD);
+//        deck.add(Type.CANNON);
+//        deck.add(Type.RAGE);
+//        deck.add(Type.BABY_DRAGON);
+//        deck.add(Type.MINI_PEKKA);
+//
+//
+//        gc.setDeck(deck);
+//        gc.setGameManager(1,1);
+//        gc.setView();
 
 
         primaryStage.setTitle("Clash Royal");
-        primaryStage.setScene(new Scene(root,576,1124));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

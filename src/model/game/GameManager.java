@@ -140,7 +140,11 @@ public class GameManager {
         try {
             player.action();
             bot.action();
-            smartBot();
+            if(botDiffculty == 2){
+                smartBot();
+            }else {
+                dumbBot();
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -444,5 +448,15 @@ public class GameManager {
 
     public void setBotDiffculty(int botDiffculty) {
         this.botDiffculty = botDiffculty;
+    }
+
+    public CellType winner(){
+        if(player.getKingTower().getState() == State.DEAD)return CellType.BOT;
+        if(bot.getKingTower().getState() == State.DEAD)return CellType.PLAYER;
+        if(player.getCrown() > bot.getCrown())return CellType.PLAYER;
+        if(bot.getCrown() > player.getCrown())return CellType.BOT;
+        if(player.getQueenTowers()[0].getHp()+ player.getQueenTowers()[1].getHp()+ player.getKingTower().getHp() >
+                bot.getKingTower().getHp()+bot.getQueenTowers()[0].getHp()+bot.getQueenTowers()[1].getHp())return CellType.PLAYER;
+        return CellType.BOT;
     }
 }
