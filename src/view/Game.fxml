@@ -13,7 +13,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1124.0" prefWidth="576.0" scaleShape="false" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
    <center>
-      <Group fx:id="group" BorderPane.alignment="CENTER" />
+      <Group fx:id="group" autoSizeChildren="false" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
       <HBox alignment="CENTER_LEFT" maxHeight="100.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="576.0" style="-fx-background-color: #594106; -fx-border-color: black;" BorderPane.alignment="CENTER">

@@ -13,14 +13,28 @@ public class Projectile {
     private double xStep;
     private double yStep;
     private boolean hasReached;
+    private double customSpeed;
 
     public Projectile(Point2D start,Point2D end,Type unitType){
         this.start =start;
         this.end = end;
+        customSpeed = 0;
         current = new Point2D(0,0);
         current = current.add(start.getX()*32,start.getY()*32);
         this.unitType = unitType;
         calculateStep();
+
+    }
+
+    public Projectile(Point2D start,Point2D end,Type unitType,int customSpeed){
+        this.start =start;
+        this.end = end;
+        this.customSpeed = customSpeed;
+        current = new Point2D(0,0);
+        current = current.add(start.getX()*32,start.getY()*32);
+        this.unitType = unitType;
+        calculateStep();
+
     }
 
     public void move(){
@@ -39,9 +53,14 @@ public class Projectile {
         }
         else {
             double m = Math.atan( (end.getX()-start.getX()) / (end.getY()-start.getY()));
-            xStep = speed * Math.sin(m);
-            yStep = speed * Math.cos(m);
-
+            if (customSpeed == 0){
+                xStep = speed * Math.sin(m);
+                yStep = speed * Math.cos(m);
+            }
+            else {
+                xStep = customSpeed * Math.sin(m);
+                yStep = customSpeed * Math.cos(m);
+            }
             if(end.getX()<start.getX() && xStep>0)xStep *= -1;
             if(end.getY()<start.getY() && yStep>0)yStep *= -1;
             if(end.getX()>start.getX() && xStep<0)xStep *= -1;
