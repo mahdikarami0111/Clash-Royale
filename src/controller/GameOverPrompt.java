@@ -40,7 +40,6 @@ public class GameOverPrompt {
             ProfileHandler.getCurrentUser().setXp(ProfileHandler.getCurrentUser().getXp()+70);
         }
         int xp = ProfileHandler.getCurrentUser().getXp();
-        System.out.println(xp);
         if(xp > 2500){
             ProfileHandler.getCurrentUser().setLevel(5);
         }
