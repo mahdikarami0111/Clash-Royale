@@ -9,8 +9,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import model.enums.CellType;
 import model.enums.Type;
+import model.game.sharedRecourses.Game;
 import model.spells.Rage;
+import model.units.KingTower;
 import model.units.Projectile;
 import model.units.Troop;
 import model.units.Unit;
@@ -31,6 +36,7 @@ public class CRView {
     private HashMap<Type, Image> projectileImages;
     private HashMap<Type,MutableImage> mutableImages;
     private HashMap<Type,Image> staticImages;
+    private HashMap<Unit,Rectangle> hpBars;
 
     private TextField elixir;
     private TextField playerCrown;
@@ -49,6 +55,7 @@ public class CRView {
         projectiles = new HashMap<>();
         buildings = new HashMap<>();
         projectileImages = new HashMap<>();
+        hpBars = new HashMap<>();
 
         mutableImages = new HashMap<>();
         staticImages = new HashMap<>();
@@ -147,6 +154,7 @@ public class CRView {
                 image.setY(projectile.getCurrent().getX());
             });
         });
+        updateHpBars();
     }
 
     public boolean isMutable(Type type){
@@ -246,6 +254,112 @@ public class CRView {
             @Override
             public void run() {
                 playerCrown.setText(count+"");
+            }
+        });
+    }
+
+    public HashMap<Unit, Rectangle> getHpBars() {
+        return hpBars;
+    }
+
+    public void updateHpBars(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                hpBars.forEach((k,v) ->{
+                    if(k instanceof KingTower){
+                        v.setWidth(((double) k.getHp()/ (double) Game.gameManager().getUnitInformationHashMap().get(k.type).hp)*96);
+                    }
+                    else {
+                        v.setWidth(((double) k.getHp()/ (double) Game.gameManager().getUnitInformationHashMap().get(k.type).hp)*64);
+                    }
+                });
+            }
+        });
+    }
+
+    public void neHpBar(Unit unit){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(unit == Game.gameManager().getPlayer().getQueenTowers()[0]){
+                    Rectangle r  =new Rectangle();
+                    r.setFill(Color.RED);
+                    r.setArcHeight(10);
+                    r.setArcWidth(10);
+                    r.setStroke(Color.BLACK);
+                    r.setX(32);
+                    r.setY(29*32 + 5);
+                    r.setHeight(10);
+                    r.setWidth(64);
+                    hpBars.put(unit,r);
+                    group.getChildren().add(r);
+                }
+                if(unit == Game.gameManager().getPlayer().getQueenTowers()[1]){
+                    Rectangle r  =new Rectangle();
+                    r.setFill(Color.RED);
+                    r.setArcHeight(10);
+                    r.setArcWidth(10);
+                    r.setStroke(Color.BLACK);
+                    r.setX(14*32);
+                    r.setY(29*32 + 5);
+                    r.setHeight(10);
+                    r.setWidth(64);
+                    hpBars.put(unit,r);
+                    group.getChildren().add(r);
+                }
+                if(unit == Game.gameManager().getPlayer().getKingTower()){
+                    Rectangle r  =new Rectangle();
+                    r.setFill(Color.RED);
+                    r.setArcHeight(10);
+                    r.setArcWidth(10);
+                    r.setStroke(Color.BLACK);
+                    r.setX(7*32);
+                    r.setY(31*32 + 5);
+                    r.setHeight(10);
+                    r.setWidth(96);
+                    hpBars.put(unit,r);
+                    group.getChildren().add(r);
+                }
+                if(unit == Game.gameManager().getPlayer(CellType.BOT).getQueenTowers()[0]){
+                    Rectangle r  =new Rectangle();
+                    r.setFill(Color.RED);
+                    r.setArcHeight(10);
+                    r.setArcWidth(10);
+                    r.setStroke(Color.BLACK);
+                    r.setHeight(10);
+                    r.setWidth(64);
+                    r.setX(32);
+                    r.setY(2*32+17);
+                    hpBars.put(unit,r);
+                    group.getChildren().add(r);
+                }
+                if(unit == Game.gameManager().getPlayer(CellType.BOT).getQueenTowers()[1]){
+                    Rectangle r  =new Rectangle();
+                    r.setFill(Color.RED);
+                    r.setArcHeight(10);
+                    r.setArcWidth(10);
+                    r.setStroke(Color.BLACK);
+                    r.setHeight(10);
+                    r.setWidth(64);
+                    r.setX(14 * 32);
+                    r.setY(2*32+17);
+                    hpBars.put(unit,r);
+                    group.getChildren().add(r);
+                }
+                if(unit == Game.gameManager().getPlayer(CellType.BOT).getKingTower()){
+                    Rectangle r  =new Rectangle();
+                    r.setFill(Color.RED);
+                    r.setArcHeight(10);
+                    r.setArcWidth(10);
+                    r.setStroke(Color.BLACK);
+                    r.setX(7*32);
+                    r.setY(17);
+                    r.setHeight(10);
+                    r.setWidth(96);
+                    hpBars.put(unit,r);
+                    group.getChildren().add(r);
+                }
             }
         });
     }

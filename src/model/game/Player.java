@@ -1,6 +1,9 @@
 package model.game;
 
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import model.enums.CellType;
 import model.enums.State;
 import model.enums.Type;
@@ -35,11 +38,15 @@ public class Player {
         buildings = new ArrayList<>();
         projectiles = new ArrayList<>();
 
+
         if(team == CellType.PLAYER){
 
             kingTower = new KingTower(CellType.PLAYER,new Point2D(27,7));
+            View.CRView().neHpBar(kingTower);
             queenTowers[0] = new QueenTower(CellType.PLAYER,new Point2D(26,1));
+            View.CRView().neHpBar(queenTowers[0]);
             queenTowers[1] = new QueenTower(CellType.PLAYER,new Point2D(26,14));
+            View.CRView().neHpBar(queenTowers[1]);
 
 
             for(int i = 0 ; i<4;i++){
@@ -57,15 +64,18 @@ public class Player {
             for(int i =0 ;i<3;i++){
                 for(int j=0;j<3;j++){
                     Map.getMap()[26+i][14+j].setCellType(CellType.PLAYER);
-                    Map.getMap()[26+i][14+j].setUnit(queenTowers[0]);
+                    Map.getMap()[26+i][14+j].setUnit(queenTowers[1]);
                 }
             }
         }
 
         else {
             kingTower = new KingTower(team,new Point2D(1,7));
+            View.CRView().neHpBar(kingTower);
             queenTowers[0] = new QueenTower(team,new Point2D(3,1));
+            View.CRView().neHpBar(queenTowers[0]);
             queenTowers[1] = new QueenTower(team,new Point2D(3,14));
+            View.CRView().neHpBar(queenTowers[1]);
             for(int i = 0 ; i<4;i++){
                 for(int j = 0;j<4;j++){
                     Map.getMap()[1+i][7+j].setCellType(CellType.BOT);

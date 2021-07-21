@@ -6,15 +6,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.enums.Type;
 import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.View;
@@ -107,6 +112,7 @@ public class GameController implements Initializable {
                     public void run() {
                         if(Game.gameManager().gameOver()){
                             t.cancel();
+                            GameOverPrompt.show();
                         }
                         Game.gameManager().tick();
                         View.CRView().render();
@@ -123,7 +129,8 @@ public class GameController implements Initializable {
         cardManager = new CardManager(deck);
     }
 
-    public void setGameManager(int lvl){
+    public void setGameManager(int lvl, int botDifficulty){
+        Game.gameManager().setBotDiffculty(botDifficulty);
         Game.initGameManager(lvl);
         Game.gameManager().setDeck(deck);
     }

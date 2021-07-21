@@ -24,9 +24,10 @@ public class Rage {
                 CellType t = Map.getMap()[i][j].getCellType();
                 Unit unit = Map.getMap()[i][j].getUnit();
                 if(t==team && unit != null &&location.distance(new Point2D(i,j))<= radius){
-                    affectedUnits.add(unit);
+                    if(affectedUnits.contains(unit))continue;
                     unit.setAttackSpeed(unit.getAttackSpeed()/1.4);
                     unit.setDamage((int) (unit.getDamage()*1.4));
+                    affectedUnits.add(unit);
                     if(unit instanceof Troop){
                         ((Troop) unit).setMovementSpeed((int)(((Troop) unit).getMovementSpeed()*1.4));
                     }

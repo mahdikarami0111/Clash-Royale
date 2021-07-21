@@ -11,11 +11,9 @@ import model.informationObjects.UnitInformation;
 import model.spells.Arrows;
 import model.spells.FireBall;
 import model.spells.Rage;
-import model.units.Troop;
-import model.units.Projectile;
+import model.units.*;
 
 import javafx.geometry.Point2D;
-import model.units.Unit;
 import view.CRView;
 
 import java.io.File;
@@ -36,6 +34,8 @@ public class GameManager {
     private HashMap<Type, UnitInformation> unitInformationHashMap;
 
     private ArrayList<Type> deck;
+
+    private int botDiffculty;
 
 
 
@@ -97,6 +97,8 @@ public class GameManager {
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 UnitInformation u = (UnitInformation) ois.readObject();
                 unitInformationHashMap.put(type,u);
+//                System.out.println(type);
+//                u.print();
                 fis.close();
                 ois.close();
             } catch (Exception e) {
@@ -135,9 +137,13 @@ public class GameManager {
 
 
     public void tick(){
-        player.action();
-        bot.action();
-        dumbBot();
+        try {
+            player.action();
+            bot.action();
+            smartBot();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void updateCrowns(Player p, int crowns){
@@ -146,7 +152,7 @@ public class GameManager {
             View.CRView().updateBotCrown(bot.getCrown());
         }else {
             player.setCrown(player.getCrown()+crowns);
-            View.CRView().updatePlayerCrown(bot.getCrown());
+            View.CRView().updatePlayerCrown(player.getCrown());
         }
     }
 
@@ -294,13 +300,13 @@ public class GameManager {
                     Point2D location = new Point2D(10,random.nextInt(8)+4);
                     Type t = deck.get(random.nextInt(8));
                     if(t == Type.RAGE){
-                        Game.gameManager().rage(CellType.PLAYER,location);
+                        Game.gameManager().rage(CellType.BOT,location);
                     }
                     else if(t == Type.FIREBALL){
-                        Game.gameManager().fireball(CellType.PLAYER,location);
+                        Game.gameManager().fireball(CellType.BOT,location);
                     }
                     else if(t == Type.ARROWS){
-                        Game.gameManager().arrows(CellType.PLAYER,location);
+                        Game.gameManager().arrows(CellType.BOT,location);
                     }
                     else if(View.CRView().isMutable(t)){
                         Game.gameManager().spawnTroop(location,bot,t);
@@ -316,7 +322,127 @@ public class GameManager {
         });
     }
 
+    public void smartBot(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(bot.getElixir()>6){
+                    int left = 0;
+                    int right = 0;
+                    for(int i =0;i<32;i++){
+                        for(int j = 0;j<18;j++){
+                            if(Map.getMap()[i][j].getCellType()==CellType.PLAYER){
+                                if(j>=9)right++;
+                                else{
+                                    left++;
+                                }
+                            }
+                        }
+                    }
+
+                    Random random = new Random();
+                    Point2D location = new Point2D(10,10);
+                    Type t = deck.get(random.nextInt(8));
+
+
+                    if(t == Type.RAGE){
+                        boolean label = true;
+                        for(int i =0;i<32&&label;i++){
+                            for(int j = 0;j<18;j++){
+                                if(Map.getMap()[i][j].getCellType()==CellType.BOT && !(Map.getMap()[i][j].getUnit() instanceof KingTower) && !(Map.getMap()[i][j].getUnit() instanceof QueenTower)){
+                                    location = new Point2D(i,j);
+                                    label = false;
+                                    break;
+                                }
+                            }
+                        }
+                        Game.gameManager().rage(CellType.BOT,location);
+                    }
+
+
+                    else if(t == Type.FIREBALL){
+                        boolean label = true;
+                        for(int i =0;i<32 && label;i++){
+                            for(int j = 0;j<18;j++){
+                                if(Map.getMap()[i][j].getCellType()==CellType.PLAYER){
+                                    location = new Point2D(i,j);
+                                    label = false;
+                                    break;
+                                }
+                            }
+                        }
+                        Game.gameManager().fireball(CellType.BOT,location);
+                    }
+
+
+                    else if(t == Type.ARROWS){
+                        boolean label = true;
+                        for(int i =0;i<32&&label;i++){
+                            for(int j = 0;j<18;j++){
+                                if(Map.getMap()[i][j].getCellType()==CellType.PLAYER){
+                                    location = new Point2D(i,j);
+                                    label = false;
+                                    break;
+                                }
+                            }
+                        }
+                        Game.gameManager().arrows(CellType.BOT,location);
+                    }
+
+
+                    else if(View.CRView().isMutable(t)){
+                        int y ,x;
+                        if(left>= right){
+                            y = random.nextInt(6)+3;
+                        }
+                        else{
+                            y = random.nextInt(6)+8;
+                        }
+                        if(unitInformationHashMap.get(t).range>=2){
+                            x = 7;
+                        }
+                        else {
+                            x = 12;
+                        }
+                        location = new Point2D(x,y);
+                        Game.gameManager().spawnTroop(location,bot,t);
+                    }
+
+
+                    else if(t == Type.CANNON){
+                        int y;
+                        if(left>= right){
+                            y = random.nextInt(6)+3;
+                        }
+                        else{
+                            y = random.nextInt(6)+8;
+                        }
+                        location  =new Point2D(7,y);
+                        Game.gameManager().spawnBuilding(location,bot,t);
+                    }
+
+
+                    else if(t == Type.INFERNO_TOWER){
+                        int y;
+                        if(left>= right){
+                            y = random.nextInt(6)+3;
+                        }
+                        else{
+                            y = random.nextInt(6)+8;
+                        }
+                        location  =new Point2D(7,y);
+                        Game.gameManager().spawnBuilding(location,bot,t);
+                    }
+                }
+            }
+        });
+    }
+
     public boolean gameOver(){
         return player.getKingTower().getState() == State.DEAD || bot.getKingTower().getState() == State.DEAD || timer >= 180;
+    }
+
+    public void setBotDiffculty(int botDiffculty) {
+        this.botDiffculty = botDiffculty;
     }
 }

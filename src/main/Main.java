@@ -123,9 +123,13 @@ public class Main extends Application {
         deck.add(Type.RAGE);
         deck.add(Type.BABY_DRAGON);
         deck.add(Type.MINI_PEKKA);
+
+
         gc.setDeck(deck);
-        gc.setGameManager(1);
+        gc.setGameManager(1,1);
         gc.setView();
+
+
         primaryStage.setTitle("Clash Royal");
         primaryStage.setScene(new Scene(root,576,1124));
         primaryStage.show();
