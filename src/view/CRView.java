@@ -15,10 +15,7 @@ import model.enums.CellType;
 import model.enums.Type;
 import model.game.sharedRecourses.Game;
 import model.spells.Rage;
-import model.units.KingTower;
-import model.units.Projectile;
-import model.units.Troop;
-import model.units.Unit;
+import model.units.*;
 
 import javafx.geometry.Point2D;
 import java.util.HashMap;
@@ -68,11 +65,17 @@ public class CRView {
     }
 
     public void removeTroop(Troop troop){
-        Platform.runLater(() -> group.getChildren().remove(troops.remove(troop)));
+        Platform.runLater(() -> {
+            group.getChildren().remove(hpBars.remove(troop));
+            group.getChildren().remove(troops.remove(troop));
+        });
     }
 
     public void removeBuilding (Unit unit){
-        Platform.runLater(() -> group.getChildren().remove(buildings.remove(unit)));
+        Platform.runLater(() -> {
+            group.getChildren().remove(hpBars.remove(unit));
+            group.getChildren().remove(buildings.remove(unit));
+        });
     }
 
     public void removeProjectile(Projectile projectile){
@@ -148,6 +151,10 @@ public class CRView {
             troops.forEach((troop,image) ->{
                 image.setX((troop.getPixelLocation().getY())+image.getxScale());
                 image.setY((troop.getPixelLocation().getX())+image.getyScale());
+                if(hpBars.get(troop) != null){
+                    hpBars.get(troop).setX(troop.getPixelLocation().getY()+6);
+                    hpBars.get(troop).setY(troop.getPixelLocation().getX()+32);
+                }
             } );
             projectiles.forEach((projectile,image) -> {
                 image.setX(projectile.getCurrent().getY());
@@ -270,8 +277,11 @@ public class CRView {
                     if(k instanceof KingTower){
                         v.setWidth(((double) k.getHp()/ (double) Game.gameManager().getUnitInformationHashMap().get(k.type).hp)*96);
                     }
-                    else {
+                    else if(k instanceof QueenTower) {
                         v.setWidth(((double) k.getHp()/ (double) Game.gameManager().getUnitInformationHashMap().get(k.type).hp)*64);
+                    }
+                    else {
+                        v.setWidth(((double) k.getHp()/(double) Game.gameManager().getUnitInformationHashMap().get(k.type).hp) * 20);
                     }
                 });
             }
@@ -294,6 +304,7 @@ public class CRView {
                     r.setWidth(64);
                     hpBars.put(unit,r);
                     group.getChildren().add(r);
+                    return;
                 }
                 if(unit == Game.gameManager().getPlayer().getQueenTowers()[1]){
                     Rectangle r  =new Rectangle();
@@ -307,6 +318,7 @@ public class CRView {
                     r.setWidth(64);
                     hpBars.put(unit,r);
                     group.getChildren().add(r);
+                    return;
                 }
                 if(unit == Game.gameManager().getPlayer().getKingTower()){
                     Rectangle r  =new Rectangle();
@@ -320,6 +332,7 @@ public class CRView {
                     r.setWidth(96);
                     hpBars.put(unit,r);
                     group.getChildren().add(r);
+                    return;
                 }
                 if(unit == Game.gameManager().getPlayer(CellType.BOT).getQueenTowers()[0]){
                     Rectangle r  =new Rectangle();
@@ -333,6 +346,7 @@ public class CRView {
                     r.setY(2*32+17);
                     hpBars.put(unit,r);
                     group.getChildren().add(r);
+                    return;
                 }
                 if(unit == Game.gameManager().getPlayer(CellType.BOT).getQueenTowers()[1]){
                     Rectangle r  =new Rectangle();
@@ -346,6 +360,7 @@ public class CRView {
                     r.setY(2*32+17);
                     hpBars.put(unit,r);
                     group.getChildren().add(r);
+                    return;
                 }
                 if(unit == Game.gameManager().getPlayer(CellType.BOT).getKingTower()){
                     Rectangle r  =new Rectangle();
@@ -357,6 +372,47 @@ public class CRView {
                     r.setY(17);
                     r.setHeight(10);
                     r.setWidth(96);
+                    hpBars.put(unit,r);
+                    group.getChildren().add(r);
+                    return;
+                }
+                if(unit.type == Type.CANNON){
+                    Rectangle r  =new Rectangle();
+                    r.setFill(Color.RED);
+                    r.setArcHeight(5);
+                    r.setArcWidth(5);
+                    r.setStroke(Color.BLACK);
+                    r.setHeight(3);
+                    r.setWidth(20);
+                    r.setX(unit.getCurrentLocation().getY()*32+10);
+                    r.setY(unit.getCurrentLocation().getX()*32+52);
+                    hpBars.put(unit,r);
+                    group.getChildren().add(r);
+                    return;
+                }
+                if(unit.type == Type.INFERNO_TOWER){
+                    Rectangle r  =new Rectangle();
+                    r.setFill(Color.RED);
+                    r.setArcHeight(5);
+                    r.setArcWidth(5);
+                    r.setStroke(Color.BLACK);
+                    r.setHeight(3);
+                    r.setWidth(20);
+                    r.setX(unit.getCurrentLocation().getY()*32+10);
+                    r.setY(unit.getCurrentLocation().getX()*32+75);
+                    hpBars.put(unit,r);
+                    group.getChildren().add(r);
+                }
+                else {
+                    Rectangle r  =new Rectangle();
+                    r.setFill(Color.RED);
+                    r.setArcHeight(5);
+                    r.setArcWidth(5);
+                    r.setStroke(Color.BLACK);
+                    r.setHeight(3);
+                    r.setWidth(20);
+                    r.setX(unit.getCurrentLocation().getY()*32+6);
+                    r.setY(unit.getCurrentLocation().getX()*32+32);
                     hpBars.put(unit,r);
                     group.getChildren().add(r);
                 }

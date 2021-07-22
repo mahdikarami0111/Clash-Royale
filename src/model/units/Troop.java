@@ -377,4 +377,8 @@ public class Troop extends Unit {
     public void setMovementSpeed(int movementSpeed) {
         this.movementSpeed = movementSpeed;
     }
+
+    public Point2D getStep() {
+        return step;
+    }
 }

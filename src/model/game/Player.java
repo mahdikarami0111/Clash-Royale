@@ -107,6 +107,7 @@ public class Player {
         Map.getMap()[(int)location.getX()][(int)location.getY()].setCellType(team);
         troops.add(troop);
         View.CRView().spawnTroop(troop);
+        View.CRView().neHpBar(troop);
     }
 
     public synchronized void summonBuilding(Type type,Point2D location){
@@ -115,6 +116,7 @@ public class Player {
         Map.getMap()[(int)location.getX()][(int)location.getY()].setCellType(team);
         buildings.add(building);
         View.CRView().spawnBuilding(building);
+        View.CRView().neHpBar(building);
     }
 
     public synchronized void summonProjectile(Projectile projectile){
