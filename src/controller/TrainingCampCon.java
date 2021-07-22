@@ -15,6 +15,9 @@ import model.utils.ProfileHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * training camp is where the player will choose bot difficulty
+ */
 public class TrainingCampCon {
     private ArrayList<Type> cards;
     private Account account;
@@ -28,6 +31,11 @@ public class TrainingCampCon {
 
     @FXML
     private Button normal;
+
+    /**
+     * go back to menu
+     * @param event event
+     */
 
     @FXML
     void goBack(ActionEvent event) {
@@ -81,10 +89,18 @@ public class TrainingCampCon {
         return cards;
     }
 
+    /**
+     * set players deck
+     * @param cards cards list
+     */
     public void setCards(ArrayList<Type> cards) {
         this.cards = cards;
     }
 
+    /**
+     *
+     * @param account account to be set
+     */
     public void setAccount(Account account) {
         this.account = account;
     }

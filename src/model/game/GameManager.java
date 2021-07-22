@@ -23,6 +23,9 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.*;
 
+/**
+ * main Model class is game Manager it manages basis of the game and players
+ */
 public class GameManager {
 
     private int timer;
@@ -41,7 +44,10 @@ public class GameManager {
 
 
 
-
+    /**
+     * the game is initialized based on players level
+     * @param lvl is users level
+     */
     public GameManager(int lvl){
         this.lvl = lvl;
         unitInformationHashMap = new HashMap<>();
@@ -49,6 +55,9 @@ public class GameManager {
         initializeSpells();
     }
 
+    /**
+     * starts the game starts making elixir and setting the bot and also starts timer
+     */
     public void start(){
         player = new Player(CellType.PLAYER);
         bot = new Player(CellType.BOT);
@@ -62,6 +71,9 @@ public class GameManager {
         elixirMaker();
     }
 
+    /**
+     * start timer
+     */
     public void startTimer(){
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
@@ -82,6 +94,10 @@ public class GameManager {
         t.schedule(task,0,1000);
     }
 
+    /**
+     * generate elixir
+     * in the last minute, the ratio will be doubled
+     */
     public void elixirMaker(){
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
@@ -110,7 +126,10 @@ public class GameManager {
         t.schedule(task,0,2000);
     }
 
-
+    /**
+     * unit attributes are based on user level and initialized as so
+     * @param lvl user level
+     */
     public void initializeUnitInfo(int lvl){
         for (Type type: Type.values()){
             if(type == Type.RAGE||type == Type.ARROWS|| type==Type.FIREBALL)continue;
@@ -119,8 +138,6 @@ public class GameManager {
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 UnitInformation u = (UnitInformation) ois.readObject();
                 unitInformationHashMap.put(type,u);
-//                System.out.println(type);
-//                u.print();
                 fis.close();
                 ois.close();
             } catch (Exception e) {
@@ -129,6 +146,13 @@ public class GameManager {
         }
     }
 
+    /**
+     * if its possible to spawn the troop in the given location for given player spawns it
+     * @param location is where troop will be spawned
+     * @param player is the player spawning troops
+     * @param type is troop type
+     * @return true upon successful spawn
+     */
     public boolean spawnTroop(Point2D location, Player player,Type type){
         if(player.getElixir() >= unitInformationHashMap.get(type).cost){
             if(unitInformationHashMap.get(type).count == 1 && isLocationValid(location,player.getTeam())){
@@ -148,6 +172,13 @@ public class GameManager {
         }return false;
     }
 
+    /**
+     *
+     * @param location is where building will be spawned
+     * @param player is the building spawning troops
+     * @param type is building type
+     * @return true upon successful spawn
+     */
     public boolean spawnBuilding(Point2D location, Player player, Type type){
         if(player.getElixir() >= unitInformationHashMap.get(type).cost){
             player.summonBuilding(type,location);
@@ -157,7 +188,9 @@ public class GameManager {
         return false;
     }
 
-
+    /**
+     * causes all player units and bot units to take proper actions based on game state
+     */
     public void tick(){
         try {
             player.action();
@@ -168,6 +201,11 @@ public class GameManager {
         }
     }
 
+    /**
+     * changes crowns of the players, gets called upon aking or queen tower destruction
+     * @param p is the player calling the method
+     * @param crowns is the crowns that will be added
+     */
     public void updateCrowns(Player p, int crowns){
         if(p.getTeam() == CellType.PLAYER){
             bot.setCrown(bot.getCrown()+crowns);
@@ -183,14 +221,27 @@ public class GameManager {
         return timer;
     }
 
+    /**
+     *
+     * @return user level
+     */
     public int getLvl() {
         return lvl;
     }
 
+    /**
+     *
+     * @return player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     *
+     * @param team retursn player based on their team (player or bot)
+     * @return player if team is player or bot otherwise
+     */
     public Player getPlayer(CellType team){
         if(team == CellType.PLAYER)return player;
         else {
@@ -198,14 +249,29 @@ public class GameManager {
         }
     }
 
+    /**
+     *
+     * @return bot
+     */
     public Player getBot() {
         return bot;
     }
+
+    /**
+     *
+     * @return hash map that maps a unit(based on its type to its information
+     */
 
     public HashMap<Type, UnitInformation> getUnitInformationHashMap() {
         return unitInformationHashMap;
     }
 
+    /**
+     * checks if a location is valid to place units on from teh given team or not
+     * @param location Point2D  location to be checked
+     * @param team which player wants to place in this location
+     * @return boolean  true if valid false if not
+     */
     public boolean isLocationValid(Point2D location,CellType team){
         if(location.getY()==0 || location.getY()==1 || location.getY()==16 || location.getY()==17)return false;
         if(Map.getMap()[(int) location.getX()][(int) location.getY()].getCellType() != CellType.PATH)return false;
@@ -250,6 +316,13 @@ public class GameManager {
         }
     }
 
+    /**
+     * gets valid location for units that need more than one cell
+     * @param team which player wants to place units
+     * @param count int  how many player wants to place
+     * @param location Point2D  location which player wants to place the units
+     * @return and array list with size of units count around the given location
+     */
     public ArrayList<Point2D> findLocations(CellType team,int count,Point2D location){
         ArrayList<Point2D> points = new ArrayList<>();
         int counter = 1;
@@ -266,6 +339,9 @@ public class GameManager {
         return points;
     }
 
+    /**
+     * initialize spells data
+     */
     public void initializeSpells(){
         try {
             File f = new File("./src/recourses/SpellInformation/ARROWS/"+lvl+".txt");
@@ -282,6 +358,12 @@ public class GameManager {
         }
     }
 
+    /**
+     *
+     * @param team is the team using spell
+     * @param location is the location spell will be used
+     * @return true if enough elixir exists
+     */
     public boolean rage(CellType team,Point2D location){
         if(getPlayer(team).getElixir()>=Rage.getCost()){
             Rage.attack(location,team);
@@ -291,6 +373,12 @@ public class GameManager {
         return false;
     }
 
+    /**
+     *
+     * @param team is the team using spell
+     * @param location is the location spell will be used
+     * @return true if enough elixir exists
+     */
     public boolean fireball(CellType team, Point2D location){
         if(getPlayer(team).getElixir()>= FireBall.getCost()){
             FireBall.attack(location,team);
@@ -300,6 +388,12 @@ public class GameManager {
         return false;
     }
 
+    /**
+     *
+     * @param team is the team using spell
+     * @param location is the location spell will be used
+     * @return true if enough elixir exists
+     */
     public boolean arrows(CellType team,Point2D location){
         if(getPlayer(team).getElixir()>=Arrows.getCost()){
             Arrows.attack(location,team);
@@ -309,18 +403,34 @@ public class GameManager {
         return false;
     }
 
+    /**
+     *
+     * @param deck is deck to be set
+     */
     public void setDeck(ArrayList<Type> deck) {
         this.deck = deck;
     }
 
+    /**
+     *
+     * @return true if game is over
+     */
     public boolean gameOver(){
         return player.getKingTower().getState() == State.DEAD || bot.getKingTower().getState() == State.DEAD || timer >= 180;
     }
 
+    /**
+     *
+     * @param botDifficulty int  difficulty of the bot
+     */
     public void setBotDifficulty(int botDifficulty) {
         this.botDifficulty = botDifficulty;
     }
 
+    /**
+     * determines the winner of the game if game is over
+     * @return BOT if bot wins otherwise PLAYER
+     */
     public CellType winner(){
         if(player.getKingTower().getState() == State.DEAD)return CellType.BOT;
         if(bot.getKingTower().getState() == State.DEAD)return CellType.PLAYER;

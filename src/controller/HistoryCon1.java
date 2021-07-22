@@ -15,6 +15,10 @@ import model.utils.History;
 
 import java.io.IOException;
 
+/**
+ * controller for history scene
+ * display the result and time of each game
+ */
 public class HistoryCon1 {
 
     private Account account;

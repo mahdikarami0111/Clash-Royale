@@ -5,6 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+/**
+ * show prompts in case of application misuse
+ * prompts will be displayed on another stage
+ */
 public class PromptCon {
 
     @FXML

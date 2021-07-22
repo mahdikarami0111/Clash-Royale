@@ -6,6 +6,10 @@ import model.enums.State;
 import model.enums.Type;
 import model.units.Unit;
 
+
+/**
+ * set size and scale of an image and its state(moving left or right, attacking)
+ */
 public class CustomImageview extends ImageView {
     private Image moveR;
     private Image moveL;
@@ -14,6 +18,10 @@ public class CustomImageview extends ImageView {
     private int xScale;
     private int yScale;
 
+    /**
+     *
+     * @param mutableImage initializes this class based on a MutableImage object
+     */
     public CustomImageview(MutableImage mutableImage){
         moveR = mutableImage.getMoveR();
         moveL = mutableImage.getMoveL();
@@ -26,6 +34,10 @@ public class CustomImageview extends ImageView {
         this.setImage(null);
     }
 
+    /**
+     *
+     * @param state is the state to be set
+     */
     public void changeState(State state){
         switch (state){
             case MOVING_RIGHT:

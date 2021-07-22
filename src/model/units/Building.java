@@ -6,9 +6,9 @@ import model.enums.Type;
 import javafx.geometry.Point2D;
 import model.game.sharedRecourses.Game;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
+/**
+ * building extends unit
+ */
 public class Building extends Unit{
     private long lifespan;
 
@@ -18,6 +18,9 @@ public class Building extends Unit{
 
     }
 
+    /**
+     * a tick happens every 30ms -> 30ms is reduced from building life spam
+     */
     public void tick(){
         lifespan -= 30;
         if(lifespan <= 0){

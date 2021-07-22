@@ -13,11 +13,17 @@ import model.units.QueenTower;
 
 import java.util.Random;
 
+/**
+ * extends fromBot class
+ */
 public class SmartBot extends Bot{
     public SmartBot(Player bot) {
         super(bot);
     }
 
+    /**
+     * place units for bot with a relative intelligence
+     */
     @Override
     public void play() {
         Platform.runLater(new Runnable() {

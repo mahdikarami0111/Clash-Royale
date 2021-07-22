@@ -11,12 +11,21 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * rage spell
+ * spells are not designed as physical entities and are defined as static classes
+ */
 public class Rage {
     private static double duration;
     private static int cost = 3;
     private static int radius = 5;
 
 
+    /**
+     * enhance friendly units capabilities in range
+     * @param location is spells location
+     * @param team is the team using this spell
+     */
     public static  void attack(Point2D location, CellType team){
         ArrayList<Unit> affectedUnits = new ArrayList<>();
         for(int i = 0;i<32;i++){
@@ -38,10 +47,18 @@ public class Rage {
         removeEffect(affectedUnits);
     }
 
+    /**
+     *
+     * @param duration is rage spells duration
+     */
     public static void setDuration(double duration) {
         Rage.duration = duration;
     }
 
+    /**
+     * remove spell effect
+     * @param units is effected units
+     */
     public static void removeEffect(ArrayList<Unit> units){
         TimerTask task = new TimerTask() {
             @Override
@@ -59,6 +76,10 @@ public class Rage {
         t.schedule(task,(long) duration*1000);
     }
 
+    /**
+     *
+     * @return spell cost
+     */
     public static int getCost() {
         return cost;
     }

@@ -10,12 +10,18 @@ import model.game.sharedRecourses.View;
 
 import java.util.Random;
 
+/**
+ * extends for Bot class
+ */
 public class RandomBot extends Bot{
 
     public RandomBot(Player bot) {
         super(bot);
     }
 
+    /**
+     * randomly place units for bot
+     */
     @Override
     public void play() {
         Platform.runLater(new Runnable() {

@@ -14,7 +14,9 @@ import model.utils.ProfileHandler;
 import java.io.IOException;
 import java.util.HashMap;
 
-
+/**
+ * signup a player if the conditions are met( unique username...)
+ */
 public class SignupCon {
 
     @FXML
@@ -42,6 +44,11 @@ public class SignupCon {
         stage.show();
     }
 
+    /**
+     * create a new user if username is unique and password and confirm password fields match
+     * a new account corresponding to the user will be created and will be directed to menu
+     * @param event
+     */
     @FXML
     void signUp(ActionEvent event) {
         ProfileHandler.initialize();
@@ -78,7 +85,9 @@ public class SignupCon {
     }
 
 
-
+    /**
+     * show prompt upon misuse
+     */
     private void showPrompt(){
         Stage stage = new Stage();
         try {

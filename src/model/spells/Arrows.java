@@ -11,11 +11,20 @@ import model.units.Unit;
 
 import java.util.ArrayList;
 
+/**
+ * arrow spell
+ * spells are not designed as physical entities and are defined as static classes
+ */
 public class Arrows  {
     private static int damage;
     private static double radius = 4;
     private static int cost = 3;
 
+    /**
+     * casts the spell and updates view
+     * @param location is where the spell will be deployed
+     * @param team is the team using spell
+     */
     public static void attack(Point2D location, CellType team) {
         Cell[][] map = Map.getMap();
         ArrayList<Unit> units = new ArrayList<>();
@@ -55,6 +64,12 @@ public class Arrows  {
         Arrows.damage = damage;
     }
 
+    /**
+     * checks if enemy is in range
+     * @param location is spells deployment location
+     * @param enemy is enemy unit location
+     * @return true if enemy is in range
+     */
     private static boolean inRange(Point2D location, Point2D enemy){
         return Math.abs(location.distance(enemy)) <= radius;
     }

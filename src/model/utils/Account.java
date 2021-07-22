@@ -10,6 +10,11 @@ public class Account implements Serializable {
     private int xp;
     private ArrayList<History> history;
 
+    /**
+     *
+     * @param username the username of the account
+     * @param passWord the password of the account
+     */
     public Account(String username, String passWord) {
         this.username = username;
         this.passWord = passWord;
@@ -18,31 +23,57 @@ public class Account implements Serializable {
         history = new ArrayList<>();
     }
 
+
     public Account(String username, String passWord, int lvl){
         this(username, passWord);
         this.setLevel(lvl);
     }
 
+    /**
+     *
+     * @return username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     *
+     * @return username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     *
+     * @return string password
+     */
     public String getPassWord() {
         return passWord;
     }
 
+    /**
+     *
+     * @param passWord set the password
+     */
     public void setPassWord(String passWord) {
         this.passWord = passWord;
     }
+
+    /**
+     *
+     * @return user level
+     */
 
     public int getLevel() {
         return level;
     }
 
+    /**
+     *
+     * @param level is level to be set
+     */
     public void setLevel(int level) {
         this.level = level;
     }
@@ -59,6 +90,10 @@ public class Account implements Serializable {
         return history;
     }
 
+    /**
+     *
+     * @param history is list of history to be set
+     */
     public void setHistory(ArrayList<History> history) {
         this.history = history;
     }

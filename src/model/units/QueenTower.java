@@ -11,16 +11,27 @@ import model.game.sharedRecourses.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * queen tower extends unit
+ */
 public class QueenTower extends Unit{
 
     private Unit lockedTarget;
 
 
+    /**
+     *
+     * @param team is the towers team
+     * @param location is towers location
+     */
     public QueenTower(CellType team, Point2D location) {
         super(Type.QUEEN_TOWER, team, location);
     }
 
 
+    /**
+     * queen towers speciall attack , locks on a target and until it dies or goes out of range
+     */
     @Override
     public void attack(){
         if(state != State.ATTACKING){

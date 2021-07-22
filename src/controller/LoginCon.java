@@ -23,6 +23,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 
+/**
+ * login scene controller
+ * log a player in if the conditions are met
+ * and get the corresponding account
+ */
+
 public class LoginCon {
 
 
@@ -41,6 +47,10 @@ public class LoginCon {
     @FXML
     private Hyperlink signUpButton = new Hyperlink();
 
+    /**
+     * logs the player in
+     * @param event event
+     */
     @FXML
     void login(ActionEvent event) {
 
@@ -62,14 +72,6 @@ public class LoginCon {
         }
         Account a = ProfileHandler.getUsernameMap2Account().get(un);
 
-//        //..............
-//        for (int i = 0; i < 200; i++) {
-//            if (i == 0)
-//                a.getHistory().clear();
-//            a.getHistory().add(new History(i / 2 == 0));
-//        }
-//        //...............
-
         Parent parent = loader.getRoot();
         MenuCon menuCon = loader.getController();
         menuCon.setAccount(a);
@@ -83,6 +85,10 @@ public class LoginCon {
 
     }
 
+    /**
+     * changes scene to sign up
+     * @param event event
+     */
     @FXML
     void signUp(ActionEvent event)  {
         Stage stage = (Stage) userName.getScene().getWindow();

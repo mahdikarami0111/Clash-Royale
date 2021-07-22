@@ -6,7 +6,9 @@ import model.enums.Type;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
+/**
+ * units movement and attacks images(gifs)
+ */
 public class MutableImage {
     private Image attack;
     private Image moveR;
@@ -15,6 +17,11 @@ public class MutableImage {
     private int xScale;
     private int yScale;
 
+    /**
+     *
+     * @param type is unit(card) type
+     *initialize based on card type
+     */
     public MutableImage(Type type){
         File file = new File("./src/recourses/View/mutableImages/"+type.name()+"/scale.txt");
         try {

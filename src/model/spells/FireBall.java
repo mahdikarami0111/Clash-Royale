@@ -8,14 +8,22 @@ import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.Map;
 import model.units.Projectile;
 import model.units.Unit;
-
 import java.util.ArrayList;
 
+/**
+ * fireball spell
+ * spells are not designed as physical entities and are defined as static classes
+ */
 public class FireBall{
     private static double radius = 2.5;
     private static int damage;
     private static int cost = 4;
 
+    /**
+     *
+     * @param location is where the spell will be deployed
+     * @param team is the team using spell
+     */
     public static void attack(Point2D location, CellType team) {
         Cell[][] map = Map.getMap();
         ArrayList<Unit> units = new ArrayList<>();
@@ -54,6 +62,12 @@ public class FireBall{
 
 
 
+    /**
+     * checks if enemy is in range
+     * @param location is spells deployment location
+     * @param enemy is enemy unit location
+     * @return true if enemy is in range
+     */
     private static boolean inRange(Point2D location, Point2D enemy){
         return Math.abs(location.distance(enemy)) <= radius;
     }

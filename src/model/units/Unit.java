@@ -11,6 +11,12 @@ import javafx.geometry.Point2D;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * represent a unit in game
+ * each unit has hp, damage, attack speed, range, available target types
+ * and its own type and may or may not have area splash
+ * each unit has a cost and a count
+ */
 public  class Unit {
     protected int hp;
     protected int damage;
@@ -29,6 +35,12 @@ public  class Unit {
     protected State state;
     public Type type;
 
+    /**
+     *
+     * @param type is unit type
+     * @param team is the units caller(bot or player)
+     * @param location is units current location
+     */
 
     public Unit(Type type, CellType team, Point2D location){
         setData(type);
@@ -38,6 +50,10 @@ public  class Unit {
         timer = 0;
     }
 
+    /**
+     *
+     * @return true if an enemy unit is in range and this unit is able to attack
+     */
     public boolean checkForAttack(){
         for (int i =0;i<32;i++){
             for(int j = 0;j<18;j++){
@@ -50,6 +66,10 @@ public  class Unit {
         }
         return false;
     }
+    /**
+     *
+     * @param state is the state to be set
+     */
 
     public void setState(State state){
         if(this.state == State.ATTACKING && state !=State.ATTACKING){
@@ -57,7 +77,9 @@ public  class Unit {
         }
         this.state = state;
     }
-
+    /**
+     * if enemy in range attack the enemy
+     */
     public synchronized void attack(){
         if(state != State.ATTACKING){
             setState(State.ATTACKING);
@@ -108,6 +130,10 @@ public  class Unit {
         }
     }
 
+    /**
+     * gets unit information from game manager and sets information
+     * @param type type of the unit
+     */
     public void setData(Type type){
         UnitInformation info = Game.gameManager().getUnitInformationHashMap().get(type);
         this.hp = info.hp;
@@ -140,6 +166,10 @@ public  class Unit {
         return currentLocation;
     }
 
+    /**
+     *decrease hp by damage taken
+     * @param damage is damage taken by unit
+     */
     public void decreaseHp(int damage){
         hp -= damage;
     }
@@ -148,6 +178,11 @@ public  class Unit {
         this.hp = hp;
     }
 
+    /**
+     * checks if this target type and unit type of enemy matches
+     * @param enemy is the enemy unit
+     * @return true if this unit can attack the enemy unit presuming its in range
+     */
     public boolean attackTypeMatch(Unit enemy){
         if(this.targetType == TargetType.BOTH)return true;
 
