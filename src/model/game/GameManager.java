@@ -4,6 +4,9 @@ import javafx.application.Platform;
 import model.enums.CellType;
 import model.enums.State;
 import model.enums.Type;
+import model.game.bot.Bot;
+import model.game.bot.RandomBot;
+import model.game.bot.SmartBot;
 import model.game.sharedRecourses.Game;
 import model.game.sharedRecourses.Map;
 import model.game.sharedRecourses.View;
@@ -14,11 +17,9 @@ import model.spells.Rage;
 import model.units.*;
 
 import javafx.geometry.Point2D;
-import view.CRView;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.*;
 
@@ -35,7 +36,8 @@ public class GameManager {
 
     private ArrayList<Type> deck;
 
-    private int botDiffculty;
+    private int botDifficulty;
+    private Bot botPlayer;
 
 
 
@@ -50,6 +52,11 @@ public class GameManager {
     public void start(){
         player = new Player(CellType.PLAYER);
         bot = new Player(CellType.BOT);
+        if(botDifficulty == 1){
+            botPlayer = new RandomBot(bot);
+        }else if(botDifficulty == 2){
+            botPlayer = new SmartBot(bot);
+        }
         timer = 0;
         startTimer();
         elixirMaker();
@@ -155,11 +162,7 @@ public class GameManager {
         try {
             player.action();
             bot.action();
-            if(botDiffculty == 2){
-                smartBot();
-            }else {
-                dumbBot();
-            }
+            botPlayer.play();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -310,159 +313,12 @@ public class GameManager {
         this.deck = deck;
     }
 
-    public void dumbBot(){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if(bot.getElixir()>6){
-                    Random random = new Random();
-                    Point2D location = new Point2D(10,random.nextInt(8)+4);
-                    Type t = deck.get(random.nextInt(8));
-                    if(t == Type.RAGE){
-                        Game.gameManager().rage(CellType.BOT,location);
-                    }
-                    else if(t == Type.FIREBALL){
-                        Game.gameManager().fireball(CellType.BOT,location);
-                    }
-                    else if(t == Type.ARROWS){
-                        Game.gameManager().arrows(CellType.BOT,location);
-                    }
-                    else if(View.CRView().isMutable(t)){
-                        Game.gameManager().spawnTroop(location,bot,t);
-                    }
-                    else if(t == Type.CANNON){
-                        Game.gameManager().spawnBuilding(location,bot,t);
-                    }
-                    else if(t == Type.INFERNO_TOWER){
-                        Game.gameManager().spawnBuilding(location,bot,t);
-                    }
-                }
-            }
-        });
-    }
-
-    public void smartBot(){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if(bot.getElixir()>6){
-                    int left = 0;
-                    int right = 0;
-                    for(int i =0;i<32;i++){
-                        for(int j = 0;j<18;j++){
-                            if(Map.getMap()[i][j].getCellType()==CellType.PLAYER){
-                                if(j>=9)right++;
-                                else{
-                                    left++;
-                                }
-                            }
-                        }
-                    }
-
-                    Random random = new Random();
-                    Point2D location = new Point2D(10,10);
-                    Type t = deck.get(random.nextInt(8));
-
-
-                    if(t == Type.RAGE){
-                        boolean label = true;
-                        for(int i =0;i<32&&label;i++){
-                            for(int j = 0;j<18;j++){
-                                if(Map.getMap()[i][j].getCellType()==CellType.BOT && !(Map.getMap()[i][j].getUnit() instanceof KingTower) && !(Map.getMap()[i][j].getUnit() instanceof QueenTower)){
-                                    location = new Point2D(i,j);
-                                    label = false;
-                                    break;
-                                }
-                            }
-                        }
-                        Game.gameManager().rage(CellType.BOT,location);
-                    }
-
-
-                    else if(t == Type.FIREBALL){
-                        boolean label = true;
-                        for(int i =0;i<32 && label;i++){
-                            for(int j = 0;j<18;j++){
-                                if(Map.getMap()[i][j].getCellType()==CellType.PLAYER){
-                                    location = new Point2D(i,j);
-                                    label = false;
-                                    break;
-                                }
-                            }
-                        }
-                        Game.gameManager().fireball(CellType.BOT,location);
-                    }
-
-
-                    else if(t == Type.ARROWS){
-                        boolean label = true;
-                        for(int i =0;i<32&&label;i++){
-                            for(int j = 0;j<18;j++){
-                                if(Map.getMap()[i][j].getCellType()==CellType.PLAYER){
-                                    location = new Point2D(i,j);
-                                    label = false;
-                                    break;
-                                }
-                            }
-                        }
-                        Game.gameManager().arrows(CellType.BOT,location);
-                    }
-
-
-                    else if(View.CRView().isMutable(t)){
-                        int y ,x;
-                        if(left>= right){
-                            y = random.nextInt(6)+3;
-                        }
-                        else{
-                            y = random.nextInt(6)+8;
-                        }
-                        if(unitInformationHashMap.get(t).range>=2){
-                            x = 7;
-                        }
-                        else {
-                            x = 12;
-                        }
-                        location = new Point2D(x,y);
-                        Game.gameManager().spawnTroop(location,bot,t);
-                    }
-
-
-                    else if(t == Type.CANNON){
-                        int y;
-                        if(left>= right){
-                            y = random.nextInt(6)+3;
-                        }
-                        else{
-                            y = random.nextInt(6)+8;
-                        }
-                        location  =new Point2D(7,y);
-                        Game.gameManager().spawnBuilding(location,bot,t);
-                    }
-
-
-                    else if(t == Type.INFERNO_TOWER){
-                        int y;
-                        if(left>= right){
-                            y = random.nextInt(6)+3;
-                        }
-                        else{
-                            y = random.nextInt(6)+8;
-                        }
-                        location  =new Point2D(7,y);
-                        Game.gameManager().spawnBuilding(location,bot,t);
-                    }
-                }
-            }
-        });
-    }
-
     public boolean gameOver(){
         return player.getKingTower().getState() == State.DEAD || bot.getKingTower().getState() == State.DEAD || timer >= 180;
     }
 
-    public void setBotDiffculty(int botDiffculty) {
-        this.botDiffculty = botDiffculty;
+    public void setBotDifficulty(int botDifficulty) {
+        this.botDifficulty = botDifficulty;
     }
 
     public CellType winner(){
@@ -473,5 +329,9 @@ public class GameManager {
         if(player.getQueenTowers()[0].getHp()+ player.getQueenTowers()[1].getHp()+ player.getKingTower().getHp() >
                 bot.getKingTower().getHp()+bot.getQueenTowers()[0].getHp()+bot.getQueenTowers()[1].getHp())return CellType.PLAYER;
         return CellType.BOT;
+    }
+
+    public ArrayList<Type> getDeck() {
+        return deck;
     }
 }
