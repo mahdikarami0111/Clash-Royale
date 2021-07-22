@@ -1,5 +1,8 @@
 package model.enums;
 
+/**
+ * type of units
+ */
 public enum Type {
     BARBARIAN,
     ARCHER,

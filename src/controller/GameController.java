@@ -34,6 +34,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * main controller of game
+ */
 public class GameController implements Initializable {
     @FXML
     private Group group;
@@ -134,18 +137,29 @@ public class GameController implements Initializable {
         t.schedule(task,0,30);
     }
 
-
+    /**
+     *
+     * @param deck is deck to be set
+     */
     public void setDeck(ArrayList<Type> deck) {
         this.deck = deck;
         cardManager = new CardManager(deck);
     }
 
+    /**
+     * set game manager based on player level and chosen difficulty
+     * @param lvl is player level
+     * @param botDifficulty is chosen difficulty
+     */
     public void setGameManager(int lvl, int botDifficulty){
         Game.initGameManager(lvl);
         Game.gameManager().setDeck(deck);
         Game.gameManager().setBotDiffculty(botDifficulty);
     }
 
+    /**
+     * initialize view
+     */
     public void setView(){
         View.initView(new CRView(group));
         View.CRView().setBotCrown(BotCrown);
@@ -153,6 +167,7 @@ public class GameController implements Initializable {
         View.CRView().setElixir(elixir);
         View.CRView().setPlayerCrown(PlayerCrown);
     }
+
 
     @FXML
     void card0(MouseEvent event) {

@@ -12,17 +12,28 @@ import model.game.sharedRecourses.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * king tower extends unit
+ */
 public class KingTower extends Unit {
 
     private boolean canAttack;
     private Unit lockedTarget;
 
-
+    /**
+     *
+     * @param team is towers team
+     * @param location is towers location
+     */
     public KingTower(CellType team, Point2D location) {
         super( Type.KING_TOWER, team, location);
         lockedTarget = null;
     }
 
+    /**
+     *
+     * @return true if king tower has been activated and enemy is in range
+     */
     @Override
     public boolean checkForAttack(){
         Player player = Game.gameManager().getPlayer(team);
@@ -38,6 +49,9 @@ public class KingTower extends Unit {
         return false;
     }
 
+    /**
+     * attack enemys
+     */
 
     @Override
     public void attack(){

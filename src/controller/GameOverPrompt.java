@@ -15,11 +15,18 @@ import model.game.sharedRecourses.View;
 import model.utils.History;
 import model.utils.ProfileHandler;
 
+/**
+ * update information after game is over and show a prompt
+ */
 public class GameOverPrompt {
 
 
     public static boolean menu;
 
+    /**
+     * show prompt and update player info
+     * @return true if player wishes to play another game and false if they wish to exit
+     */
     public static boolean show(){
         Stage window  =new Stage();
         window.initModality(Modality.APPLICATION_MODAL);

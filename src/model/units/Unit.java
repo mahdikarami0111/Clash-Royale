@@ -11,6 +11,12 @@ import javafx.geometry.Point2D;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * represent a unit in game
+ * each unit has hp, damage, attack speed, range, available target types
+ * and its own type and may or may not have area splash
+ * each unit has a cost and a count
+ */
 public  class Unit {
     protected int hp;
     protected int damage;
@@ -29,6 +35,12 @@ public  class Unit {
     protected State state;
     public Type type;
 
+    /**
+     *
+     * @param type is unit type
+     * @param team is the units caller(bot or player)
+     * @param location is units current location
+     */
 
     public Unit(Type type, CellType team, Point2D location){
         setData(type);
@@ -38,6 +50,10 @@ public  class Unit {
         timer = 0;
     }
 
+    /**
+     *
+     * @return true if an enemy unit is in range and this unit is able to attack
+     */
     public boolean checkForAttack(){
         for (int i =0;i<32;i++){
             for(int j = 0;j<18;j++){
@@ -51,6 +67,11 @@ public  class Unit {
         return false;
     }
 
+    /**
+     *
+     * @param state is the state to be set
+     */
+
     public void setState(State state){
         if(this.state == State.ATTACKING && state !=State.ATTACKING){
             timer=((long) attackSpeed*1000) - 30;
@@ -58,6 +79,9 @@ public  class Unit {
         this.state = state;
     }
 
+    /**
+     * attack the enemy
+     */
     public synchronized void attack(){
         if(state != State.ATTACKING){
             setState(State.ATTACKING);
@@ -108,6 +132,10 @@ public  class Unit {
         }
     }
 
+    /**
+     *
+     * @param type is unit type that indicates how to set unit data
+     */
     public void setData(Type type){
         UnitInformation info = Game.gameManager().getUnitInformationHashMap().get(type);
         this.hp = info.hp;
@@ -122,32 +150,60 @@ public  class Unit {
 
     }
 
-
-
+    /**
+     *
+     * @return team
+     */
     public CellType getTeam() {
         return team;
     }
 
+    /**
+     *
+     * @return state
+     */
     public State getState() {
         return state;
     }
 
+    /**
+     *
+     * @return hp
+     */
     public int getHp() {
         return hp;
     }
 
+    /**
+     *
+     * @return units current location
+     */
     public Point2D getCurrentLocation() {
         return currentLocation;
     }
 
+    /**
+     *
+     * @param damage is damage taken by unit
+     *               decrease hp by damage taken
+     */
     public void decreaseHp(int damage){
         hp -= damage;
     }
 
+    /**
+     *
+     * @param hp is hp to be set
+     */
     public void setHp(int hp) {
         this.hp = hp;
     }
 
+    /**
+     *
+     * @param enemy is the enemy unit
+     * @return true if this unit can attack the enemy unit presuming its in range
+     */
     public boolean attackTypeMatch(Unit enemy){
         if(this.targetType == TargetType.BOTH)return true;
 
@@ -158,18 +214,34 @@ public  class Unit {
         return this.targetType == enemy.unitType;
     }
 
+    /**
+     *
+     * @return unit damage
+     */
     public int getDamage() {
         return damage;
     }
 
+    /**
+     *
+     * @return attack speed
+     */
     public double getAttackSpeed() {
         return attackSpeed;
     }
 
+    /**
+     *
+     * @param damage is damage to be set
+     */
     public void setDamage(int damage) {
         this.damage = damage;
     }
 
+    /**
+     *
+     * @param attackSpeed is attack speed to be set
+     */
     public void setAttackSpeed(double attackSpeed) {
         this.attackSpeed = attackSpeed;
     }

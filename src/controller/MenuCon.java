@@ -17,6 +17,9 @@ import model.utils.History;
 
 import java.io.IOException;
 
+/**
+ * the main menu of the game with options to go to profile, history, battle deck and training camp
+ */
 public class MenuCon {
 
     private Account account;
@@ -36,6 +39,10 @@ public class MenuCon {
     @FXML
     private Hyperlink exit = new Hyperlink();
 
+    /**
+     * navigate to next page based on the players choice
+     * @param event
+     */
     @FXML
     void changeScene(ActionEvent event) {
         Stage stage = (Stage) exit.getScene().getWindow();

@@ -3,11 +3,17 @@ package model.game.sharedRecourses;
 import model.game.Cell;
 import model.enums.CellType;
 
+/**
+ * the map of game is a 2D array of cells
+ */
 public class Map {
     private static Map instance = null;
 
     private Cell[][] map;
 
+    /**
+     * create a singleton map
+     */
     private Map(){
         map = new Cell[32][18];
         for(int i = 0;i<32;i++){
@@ -27,6 +33,10 @@ public class Map {
         }
     }
 
+    /**
+     *
+     * @return the map
+     */
     public static Cell[][] getMap(){
         if(instance == null){
             instance = new Map();
@@ -47,6 +57,10 @@ public class Map {
         }
     }
 
+    /**
+     *
+     * @param instance is the map instance to be set
+     */
     public static void setInstance(Map instance) {
         Map.instance = instance;
     }

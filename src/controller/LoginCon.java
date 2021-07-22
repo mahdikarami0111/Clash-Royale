@@ -22,6 +22,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * login scene controller
+ * log a player in if the conditions are met
+ * and get the corresponding account
+ */
 
 public class LoginCon {
 

@@ -4,6 +4,9 @@ import model.enums.Type;
 
 import javafx.geometry.Point2D;
 
+/**
+ * some units have projectiles
+ */
 public class Projectile {
     private static final double speed = 6;
     private Point2D start;
@@ -15,6 +18,12 @@ public class Projectile {
     private boolean hasReached;
     private double customSpeed;
 
+    /**
+     *
+     * @param start where projectile starts from
+     * @param end where projectile ends(destination)
+     * @param unitType units have different projectiles
+     */
     public Projectile(Point2D start,Point2D end,Type unitType){
         this.start =start;
         this.end = end;
@@ -26,6 +35,13 @@ public class Projectile {
 
     }
 
+    /**
+     *
+     * @param start where projectile starts from
+     * @param end where projectile ends(destination)
+     * @param unitType units have different projectiles
+     * @param customSpeed projectiles custom speed
+     */
     public Projectile(Point2D start,Point2D end,Type unitType,int customSpeed){
         this.start =start;
         this.end = end;
@@ -37,10 +53,17 @@ public class Projectile {
 
     }
 
+    /**
+     * move the projectile
+     */
+
     public void move(){
         current = current.add(xStep,yStep);
     }
 
+    /**
+     * calculate projectile speed
+     */
     public void calculateStep(){
         if(end.getY()-start.getY() == 0){
             yStep = 0;
@@ -68,22 +91,44 @@ public class Projectile {
         }
     }
 
+    /**
+     *
+     * @return unit type
+     */
+
     public Type getUnitType() {
         return unitType;
     }
 
+    /**
+     *
+     * @return start of projectile
+     */
     public Point2D getStart() {
         return start;
     }
 
+    /**
+     *
+     * @return end of projectile
+     */
     public Point2D getEnd() {
         return end;
     }
 
+    /**
+     *
+     * @return current location
+     */
     public Point2D getCurrent() {
         return current;
     }
 
+
+    /**
+     *
+     * @return true if projectile has reached dest
+     */
     public boolean hasReached(){
         if(xStep<=0 && yStep>=0)return (Math.ceil(current.getX()/32)== end.getX() && Math.floor(current.getY()/32)==end.getY());
         if(xStep>=0 && yStep>=0)return (Math.floor(current.getX()/32)== end.getX() && Math.floor(current.getY()/32)==end.getY());
@@ -92,6 +137,10 @@ public class Projectile {
         return false;
     }
 
+    /**
+     *
+     * @return projectile direction
+     */
     public double getRotate(){
         if((end.getY()-start.getY()) == 0){
             if((end.getX()-start.getX())<0)return-90;

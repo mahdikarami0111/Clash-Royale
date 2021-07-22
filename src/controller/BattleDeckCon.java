@@ -15,6 +15,10 @@ import model.utils.Account;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * controller for battle deck,
+ * choose 8 cards to take to battle
+ */
 public class BattleDeckCon {
     private Account account;
     private ArrayList<Type> cards;
@@ -63,8 +67,11 @@ public class BattleDeckCon {
     private Button confirmation;
 
 
-
-
+    /**
+     *
+     * @param event
+     * go to training camp after battle deck selection and initialization
+     */
     @FXML
     void confirm(ActionEvent event) {
         if (!correctAmount()){
@@ -139,6 +146,10 @@ public class BattleDeckCon {
 
     }
 
+    /**
+     * go back to main menu
+     * @param event
+     */
     @FXML
     void goBack(ActionEvent event) {
         Stage stage = (Stage) menu.getScene().getWindow();
@@ -160,11 +171,18 @@ public class BattleDeckCon {
     }
 
 
+    /**
+     * initialize cards and toggle button arrays
+     */
     public void initArr(){
         cards = new ArrayList<>();
         toggleButtons = new ToggleButton[]{b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11};
     }
 
+    /**
+     *
+     * @return true if 8 cards have been chosen
+     */
     private boolean correctAmount(){
         int i = 0;
         for (ToggleButton tb : toggleButtons){
@@ -174,7 +192,10 @@ public class BattleDeckCon {
         return i == 8;
     }
 
-
+    /**
+     *
+     * @param account is account to be set
+     */
     public void setAccount(Account account) {
         this.account = account;
     }

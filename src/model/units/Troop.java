@@ -12,6 +12,9 @@ import model.game.sharedRecourses.View;
 
 import java.util.ArrayList;
 
+/**
+ * each troop extends a unit
+ */
 public class Troop extends Unit {
 
     private Point2D pixelLocation;
@@ -20,6 +23,12 @@ public class Troop extends Unit {
     private Point2D step;
     private int movementSpeed;
 
+    /**
+     * ]
+     * @param type is the troop type
+     * @param team is the troops team
+     * @param location is current location
+     */
     public Troop(Type type, CellType team, Point2D location){
         super(type,team,location);
         movementSpeed = Game.gameManager().getUnitInformationHashMap().get(type).movementSpeed;
@@ -27,6 +36,10 @@ public class Troop extends Unit {
         dest = null;
     }
 
+    /**
+     *
+     * @param state is the state to be set
+     */
     @Override
     public void setState(State state){
         if(this.state == State.ATTACKING && state !=State.ATTACKING){
@@ -40,6 +53,9 @@ public class Troop extends Unit {
         //finds closest enemy tower
     }
 
+    /**
+     * set destination of troop
+     */
     public void setDest() {
         int x = (int) currentLocation.getX();
         int y = (int) currentLocation.getY();
@@ -280,6 +296,9 @@ public class Troop extends Unit {
         }
     }
 
+    /**
+     * move troop, if destination is reached or null, set new destination
+     */
     public void move(){
         if(dest == null || hasReached()){
             setDest();
@@ -295,6 +314,9 @@ public class Troop extends Unit {
         pixelLocation = pixelLocation.add(step);
     }
 
+    /**
+     * set step
+     */
     public void setStep(){
         step = new Point2D(0.5*movementSpeed*(dest.getX()-currentLocation.getX()),0.5*movementSpeed*(dest.getY()-currentLocation.getY()));
         if(step.getY()>0 && state != State.MOVING_RIGHT)setState(State.MOVING_RIGHT);
@@ -303,9 +325,17 @@ public class Troop extends Unit {
         if(step.getX()<0 && state != State.MOVING_LEFT)setState(State.MOVING_LEFT);
     }
 
+    /**
+     *
+     * @return unit location on screen
+     */
     public Point2D getPixelLocation() {
         return pixelLocation;
     }
+
+    /**
+     * if conditions are met, troop attacks
+     */
 
     @Override
     public void attack(){
@@ -362,6 +392,10 @@ public class Troop extends Unit {
         }
     }
 
+    /**
+     *
+     * @return true if troop has reached dest pixel location
+     */
     public boolean hasReached(){
         if (step == null)return false;
         if (step.getX()<0)return Math.ceil(pixelLocation.getX()/32)==currentLocation.getX();
@@ -370,9 +404,18 @@ public class Troop extends Unit {
         return Math.floor(pixelLocation.getY()/32)==currentLocation.getY();
     }
 
+    /**
+     *
+     * @return movement speed
+     */
     public int getMovementSpeed() {
         return movementSpeed;
     }
+
+    /**
+     *
+     * @param movementSpeed is movement speed to be set
+     */
 
     public void setMovementSpeed(int movementSpeed) {
         this.movementSpeed = movementSpeed;

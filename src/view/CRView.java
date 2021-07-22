@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * initialize the game view and handle it
+ */
 public class CRView {
     private Canvas canvas;
     private GraphicsContext gc;
@@ -47,7 +50,10 @@ public class CRView {
 
     private static final String mapAddress = "";
 
-
+    /**
+     *
+     * @param group initialize the object based on an object that extends group
+     */
     public CRView(Group group){
         this.group = group;
 
@@ -67,29 +73,52 @@ public class CRView {
         drawBackground();
     }
 
+    /**
+     *
+     * @param troop is troop to be removed
+     */
     public void removeTroop(Troop troop){
         Platform.runLater(() -> group.getChildren().remove(troops.remove(troop)));
     }
 
+    /**
+     *
+     * @param unit building to be removed
+     */
     public void removeBuilding (Unit unit){
         Platform.runLater(() -> group.getChildren().remove(buildings.remove(unit)));
     }
 
+    /**
+     *
+     * @param projectile is projectile to be removed
+     */
     public void removeProjectile(Projectile projectile){
         Platform.runLater(() -> group.getChildren().remove(projectiles.remove(projectile)));
     }
 
+    /**
+     * set the background image
+     */
     public void drawBackground(){
         Image image = new Image("recourses/View/map/map.png");
         gc.drawImage(image,0,0);
     }
 
+    /**
+     *
+     * @param troop is the troop to be deployed
+     */
     public void spawnTroop(Troop troop){
         CustomImageview customImageview = new CustomImageview(mutableImages.get(troop.type));
         group.getChildren().add(customImageview);
         troops.put(troop,customImageview);
     }
 
+    /**
+     *
+     * @param projectile is the projectile to be made
+     */
     public void spawnProjectile(Projectile projectile){
         Platform.runLater(() ->{
             ImageView imageView = new ImageView(projectileImages.get(projectile.getUnitType()));
@@ -102,6 +131,10 @@ public class CRView {
     }
 
 
+    /**
+     *
+     * @param unit is building to be made
+     */
     public void spawnBuilding(Unit unit){
         ImageView imageView = new ImageView(staticImages.get(unit.type));
         imageView.setX(unit.getCurrentLocation().getY()*32);
@@ -110,6 +143,9 @@ public class CRView {
         buildings.put(unit,imageView);
     }
 
+    /**
+     * initialize images
+     */
     public void initializeImages(){
         for (Type type : Type.values()){
             if(!isMutable(type))continue;
@@ -119,6 +155,9 @@ public class CRView {
         initializeStaticImages();
     }
 
+    /**
+     * initialize projectiles
+     */
     public void initializeProjectiles(){
         projectileImages.put(Type.ARCHER,new Image("recourses/View/staticImages/projectiles/ARCHER.png"));
         projectileImages.put(Type.WIZARD,new Image("recourses/View/staticImages/projectiles/WIZARD.gif"));
@@ -129,6 +168,9 @@ public class CRView {
         projectileImages.put(Type.QUEEN_TOWER,new Image("recourses/View/staticImages/projectiles/QUEEN_TOWER.png"));
     }
 
+    /**
+     * initial static images
+     */
     public void initializeStaticImages(){
         for(Type type : Type.values()){
             if(isMutable(type)||type == Type.FIREBALL||type==Type.RAGE||type==Type.ARROWS)continue;
@@ -139,10 +181,17 @@ public class CRView {
         staticImages.put(Type.RAGE,new Image("recourses/View/staticImages/nonProjectiles/RAGE.gif"));
     }
 
+    /**
+     *
+     * @param troop is the troop that the state will be changed
+     */
     public void changeState(Troop troop){
         troops.get(troop).changeState(troop.getState());
     }
 
+    /**
+     * render the frame
+     */
     public void render(){
         Platform.runLater(() -> {
             troops.forEach((troop,image) ->{
@@ -157,25 +206,53 @@ public class CRView {
         updateHpBars();
     }
 
+    /**
+     *
+     * @param type the card to be checked
+     * @return true if it is mutable(not a spell or building/tower)
+     */
     public boolean isMutable(Type type){
         return type != Type.CANNON && type != Type.INFERNO_TOWER && type != Type.KING_TOWER && type != Type.QUEEN_TOWER && type != Type.ARROWS && type != Type.FIREBALL && type != Type.RAGE;
     }
 
+    /**
+     *
+     * @param type card to be checked
+     * @return true if the attack has projectile
+     */
     public boolean hasProjectile(Type type){
         return type == Type.WIZARD || type == Type.BABY_DRAGON || type == Type.INFERNO_TOWER || type == Type.CANNON || type == Type.ARCHER;
     }
+
+    /**
+     *
+     * @return mutable images
+     */
 
     public HashMap<Type, MutableImage> getMutableImages() {
         return mutableImages;
     }
 
+    /**
+     *
+     * @return projectile images
+     */
     public HashMap<Type, Image> getProjectileImages() {
         return projectileImages;
     }
 
+    /**
+     *
+     * @return group
+     */
     public Group getGroup() {
         return group;
     }
+
+    /**
+     *
+     * @param location where rage is deployed
+     */
 
     public void rage(Point2D location){
         ImageView imageView = new ImageView(staticImages.get(Type.RAGE));
@@ -206,22 +283,44 @@ public class CRView {
 
     }
 
+    /**
+     *
+     * @param elixir amount of elixir to be set
+     */
+
     public void setElixir(TextField elixir) {
         this.elixir = elixir;
     }
 
+    /**
+     *
+     * @param playerCrown the crowns player has earned
+     */
     public void setPlayerCrown(TextField playerCrown) {
         this.playerCrown = playerCrown;
     }
+
+    /**
+     *
+     * @param botCrown the crowns bot has earned
+     */
 
     public void setBotCrown(TextField botCrown) {
         this.botCrown = botCrown;
     }
 
+    /**
+     *
+     * @param timer set timer
+     */
     public void setTimer(TextField timer) {
         this.timer = timer;
     }
 
+    /**
+     *
+     * @param time is seconds passed
+     */
     public void updateTimer(int time){
         Platform.runLater(new Runnable() {
             @Override
@@ -231,6 +330,10 @@ public class CRView {
         });
     }
 
+    /**
+     *
+     * @param elixirCount new elixir amount
+     */
     public void updateElixir(int elixirCount){
         Platform.runLater(new Runnable() {
             @Override
@@ -240,6 +343,11 @@ public class CRView {
         });
     }
 
+
+    /**
+     *
+     * @param count new bot crown
+     */
     public void updateBotCrown(int count){
         Platform.runLater(new Runnable() {
             @Override
@@ -249,6 +357,10 @@ public class CRView {
         });
     }
 
+    /**
+     *
+     * @param count new player crown
+     */
     public void updatePlayerCrown(int count){
         Platform.runLater(new Runnable() {
             @Override
@@ -258,10 +370,17 @@ public class CRView {
         });
     }
 
+    /**
+     *
+     * @return a hash map that maps each unit to hp bar
+     */
     public HashMap<Unit, Rectangle> getHpBars() {
         return hpBars;
     }
 
+    /**
+     * update hp bars
+     */
     public void updateHpBars(){
         Platform.runLater(new Runnable() {
             @Override
@@ -278,6 +397,11 @@ public class CRView {
         });
     }
 
+    /**
+     *
+     * @param unit the unit which hp bar will be set to
+     * initialize hp bars
+     */
     public void neHpBar(Unit unit){
         Platform.runLater(new Runnable() {
             @Override

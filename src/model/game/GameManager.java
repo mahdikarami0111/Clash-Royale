@@ -22,6 +22,9 @@ import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.*;
 
+/**
+ * the game manager
+ */
 public class GameManager {
 
     private int timer;
@@ -38,8 +41,10 @@ public class GameManager {
     private int botDiffculty;
 
 
-
-
+    /**
+     * the game is initialized based on players level
+     * @param lvl is users level
+     */
     public GameManager(int lvl){
         this.lvl = lvl;
         unitInformationHashMap = new HashMap<>();
@@ -47,6 +52,9 @@ public class GameManager {
         initializeSpells();
     }
 
+    /**
+     * start the game
+     */
     public void start(){
         player = new Player(CellType.PLAYER);
         bot = new Player(CellType.BOT);
@@ -55,6 +63,9 @@ public class GameManager {
         elixirMaker();
     }
 
+    /**
+     * start timer
+     */
     public void startTimer(){
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
@@ -75,6 +86,10 @@ public class GameManager {
         t.schedule(task,0,1000);
     }
 
+    /**
+     * generate elixir
+     * in the last minute, the ratio will be doubled
+     */
     public void elixirMaker(){
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
@@ -103,7 +118,10 @@ public class GameManager {
         t.schedule(task,0,2000);
     }
 
-
+    /**
+     * unit attributes are based on user level and initialized as so
+     * @param lvl user level
+     */
     public void initializeUnitInfo(int lvl){
         for (Type type: Type.values()){
             if(type == Type.RAGE||type == Type.ARROWS|| type==Type.FIREBALL)continue;
@@ -121,6 +139,14 @@ public class GameManager {
             }
         }
     }
+
+    /**
+     *
+     * @param location is where troop will be spawned
+     * @param player is the player spawning troops
+     * @param type is troop type
+     * @return true upon successful spawn
+     */
 
     public boolean spawnTroop(Point2D location, Player player,Type type){
         if(player.getElixir() >= unitInformationHashMap.get(type).cost){
@@ -141,6 +167,13 @@ public class GameManager {
         }return false;
     }
 
+    /**
+     *
+     * @param location is where building will be spawned
+     * @param player is the building spawning troops
+     * @param type is building type
+     * @return true upon successful spawn
+     */
     public boolean spawnBuilding(Point2D location, Player player, Type type){
         if(player.getElixir() >= unitInformationHashMap.get(type).cost){
             player.summonBuilding(type,location);
@@ -150,7 +183,9 @@ public class GameManager {
         return false;
     }
 
-
+    /**
+     * make an attack
+     */
     public void tick(){
         try {
             player.action();
@@ -165,6 +200,11 @@ public class GameManager {
         }
     }
 
+    /**
+     *
+     * @param p is the player
+     * @param crowns is the crowns that will be added
+     */
     public void updateCrowns(Player p, int crowns){
         if(p.getTeam() == CellType.PLAYER){
             bot.setCrown(bot.getCrown()+crowns);
@@ -180,14 +220,27 @@ public class GameManager {
         return timer;
     }
 
+    /**
+     *
+     * @return user level
+     */
     public int getLvl() {
         return lvl;
     }
 
+    /**
+     *
+     * @return player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     *
+     * @param team is the team
+     * @return player if team is player or bot otherwise
+     */
     public Player getPlayer(CellType team){
         if(team == CellType.PLAYER)return player;
         else {
@@ -195,9 +248,18 @@ public class GameManager {
         }
     }
 
+    /**
+     *
+     * @return bot
+     */
     public Player getBot() {
         return bot;
     }
+
+    /**
+     *
+     * @return hash map that maps a unit(based on its type to its information
+     */
 
     public HashMap<Type, UnitInformation> getUnitInformationHashMap() {
         return unitInformationHashMap;
@@ -263,6 +325,9 @@ public class GameManager {
         return points;
     }
 
+    /**]
+     * initialize spells
+     */
     public void initializeSpells(){
         try {
             File f = new File("./src/recourses/SpellInformation/ARROWS/"+lvl+".txt");
@@ -279,6 +344,12 @@ public class GameManager {
         }
     }
 
+    /**
+     *
+     * @param team is the team using spell
+     * @param location is the location spell will be used
+     * @return true if enough elixir exists
+     */
     public boolean rage(CellType team,Point2D location){
         if(getPlayer(team).getElixir()>=Rage.getCost()){
             Rage.attack(location,team);
@@ -288,6 +359,12 @@ public class GameManager {
         return false;
     }
 
+    /**
+     *
+     * @param team is the team using spell
+     * @param location is the location spell will be used
+     * @return true if enough elixir exists
+     */
     public boolean fireball(CellType team, Point2D location){
         if(getPlayer(team).getElixir()>= FireBall.getCost()){
             FireBall.attack(location,team);
@@ -297,6 +374,12 @@ public class GameManager {
         return false;
     }
 
+    /**
+     *
+     * @param team is the team using spell
+     * @param location is the location spell will be used
+     * @return true if enough elixir exists
+     */
     public boolean arrows(CellType team,Point2D location){
         if(getPlayer(team).getElixir()>=Arrows.getCost()){
             Arrows.attack(location,team);
@@ -306,10 +389,17 @@ public class GameManager {
         return false;
     }
 
+    /**
+     *
+     * @param deck is deck to be set
+     */
     public void setDeck(ArrayList<Type> deck) {
         this.deck = deck;
     }
 
+    /**
+     * enemy is the dumb bot
+     */
     public void dumbBot(){
         Platform.runLater(new Runnable() {
             @Override
@@ -341,6 +431,9 @@ public class GameManager {
         });
     }
 
+    /**
+     * enemy is the smart bot
+     */
     public void smartBot(){
         Platform.runLater(new Runnable() {
             @Override
@@ -457,14 +550,26 @@ public class GameManager {
         });
     }
 
+    /**
+     *
+     * @return true if game is over
+     */
     public boolean gameOver(){
         return player.getKingTower().getState() == State.DEAD || bot.getKingTower().getState() == State.DEAD || timer >= 180;
     }
 
+    /**
+     *
+     * @param botDiffculty is the bot difficulty
+     */
     public void setBotDiffculty(int botDiffculty) {
         this.botDiffculty = botDiffculty;
     }
 
+    /**
+     *
+     * @return BOT if bot wins otherwise PLAYER
+     */
     public CellType winner(){
         if(player.getKingTower().getState() == State.DEAD)return CellType.BOT;
         if(bot.getKingTower().getState() == State.DEAD)return CellType.PLAYER;

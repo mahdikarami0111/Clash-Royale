@@ -4,6 +4,10 @@ import model.enums.TargetType;
 
 import java.io.Serializable;
 
+/**
+ * save unit information based on user level
+ */
+
 public class UnitInformation implements Serializable {
 
     private static final long serialVersionUID = 1L;

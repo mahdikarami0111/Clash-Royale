@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * represent a player in game
+ */
+
 public class Player {
 
     private int elixir;
@@ -28,6 +32,11 @@ public class Player {
     private ArrayList<Building> buildings;
     private ArrayList<Projectile> projectiles;
 
+    /**
+     *
+     * @param team is team of player
+     *             a player can be a bot or human
+     */
     public Player(CellType team){
         elixir = 4;
         crown = 0;
@@ -101,6 +110,12 @@ public class Player {
 
     }
 
+    /**
+     *
+     * @param type is type of summoned troop
+     * @param location is where the troop will be spawned
+     */
+
     public synchronized void summonTroop(Type type, Point2D location){
         Troop troop = new Troop(type,team,location);
         Map.getMap()[(int)location.getX()][(int)location.getY()].setUnit(troop);
@@ -109,6 +124,11 @@ public class Player {
         View.CRView().spawnTroop(troop);
     }
 
+    /**
+     *
+     * @param type is type of summoned building
+     * @param location is where the building will be spawned
+     */
     public synchronized void summonBuilding(Type type,Point2D location){
         Building building = new Building(type,team,location);
         Map.getMap()[(int)location.getX()][(int)location.getY()].setUnit(building);
@@ -117,10 +137,21 @@ public class Player {
         View.CRView().spawnBuilding(building);
     }
 
+    /**
+     *
+     * @param projectile is the projectile that will be displayed
+     */
+
     public synchronized void summonProjectile(Projectile projectile){
         projectiles.add(projectile);
         View.CRView().spawnProjectile(projectile);
     }
+
+    /**
+     * remove units with hp equal to 0
+     * attack if unit can attack
+     * otherwise move
+     */
 
     public synchronized void action(){
 
@@ -206,6 +237,9 @@ public class Player {
         }
     }
 
+    /**
+     * remove king tower from map
+     */
     public void clearKingMap(){
         for (int i = 0;i<4;i++){
             for (int j = 0;j<4;j++){
@@ -215,6 +249,10 @@ public class Player {
         }
     }
 
+    /**
+     * remove a queen tower
+     * @param queenTower is the queen tower that will be removed
+     */
     public void clearQueenMap(QueenTower queenTower){
         for (int i = 0;i<3;i++){
             for (int j = 0;j<3;j++){
@@ -224,53 +262,105 @@ public class Player {
         }
     }
 
+    /**
+     * generate elixir
+     */
     public void addElixir(){
         elixir += elixirRate;
     }
 
+    /**
+     *
+     * @param elixirRate is the production rate
+     */
     public void setElixirRate(int elixirRate) {
         this.elixirRate = elixirRate;
     }
 
+    /**
+     *
+     * @return amount of elixir
+     */
     public int getElixir() {
         return elixir;
     }
 
+    /**
+     *
+     * @return number of crowns
+     */
     public int getCrown() {
         return crown;
     }
 
+    /**
+     *
+     * @return the queen towers
+     */
     public QueenTower[] getQueenTowers() {
         return queenTowers;
     }
 
+    /**
+     *
+     * @return player troops
+     */
     public ArrayList<Troop> getTroops() {
         return troops;
     }
 
+    /**
+     *
+     * @return player buildings
+     */
     public ArrayList<Building> getBuildings() {
         return buildings;
     }
 
+    /**
+     *
+     * @return elixir rate
+     */
     public int getElixirRate() {
         return elixirRate;
     }
 
+    /**
+     *
+     * @return team type: bot or player
+     */
     public CellType getTeam() {
         return team;
     }
 
+    /**
+     *
+     * @return king tower
+     */
     public KingTower getKingTower() {
         return kingTower;
     }
 
+    /**
+     *
+     * @param crown set the player crowns
+     */
     public void setCrown(int crown) {
         this.crown = crown;
     }
 
+    /**
+     *
+     * @param elixir is the amount of elixir that will be set
+     */
     public synchronized void setElixir(int elixir) {
         this.elixir = elixir;
     }
+
+    /**
+     *
+     * @return true if at least one of queen towers is destroyed
+     */
 
     public boolean queenIsDead(){
         for (QueenTower queenTower : queenTowers){

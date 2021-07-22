@@ -13,6 +13,9 @@ import model.utils.History;
 
 import java.io.IOException;
 
+/**
+ * show user name, pass word, number of games played and number of games won and level
+ */
 public class ProfileCon {
     private Account account;
 
@@ -34,6 +37,10 @@ public class ProfileCon {
     @FXML
     private Hyperlink menu = new Hyperlink();
 
+    /**
+     * go to menu
+     * @param event
+     */
     @FXML
     void goBack(ActionEvent event) {
         Stage stage = (Stage) menu.getScene().getWindow();
@@ -54,10 +61,17 @@ public class ProfileCon {
         stage.show();
     }
 
+    /**
+     *
+     * @param account is the account to be set
+     */
     public void setAccount(Account account) {
         this.account = account;
     }
 
+    /**
+     * initialize the data
+     */
     public void setData(){
         if (account == null)
             return;
