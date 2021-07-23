@@ -96,10 +96,10 @@ public class SmartBot extends Bot{
                     else if(View.CRView().isMutable(t)){
                         int y ,x;
                         if(left>= right){
-                            y = random.nextInt(6)+3;
+                            y = random.nextInt(5)+3;
                         }
                         else{
-                            y = random.nextInt(6)+8;
+                            y = random.nextInt(5)+10;
                         }
                         if(Game.gameManager().getUnitInformationHashMap().get(t).range>=2){
                             x = 7;
@@ -115,10 +115,10 @@ public class SmartBot extends Bot{
                     else if(t == Type.CANNON){
                         int y;
                         if(left>= right){
-                            y = random.nextInt(6)+3;
+                            y = random.nextInt(5)+3;
                         }
                         else{
-                            y = random.nextInt(6)+8;
+                            y = random.nextInt(5)+10;
                         }
                         location  =new Point2D(7,y);
                         Game.gameManager().spawnBuilding(location,bot,t);
@@ -128,10 +128,10 @@ public class SmartBot extends Bot{
                     else if(t == Type.INFERNO_TOWER){
                         int y;
                         if(left>= right){
-                            y = random.nextInt(6)+3;
+                            y = random.nextInt(5)+3;
                         }
                         else{
-                            y = random.nextInt(6)+8;
+                            y = random.nextInt(5)+10;
                         }
                         location  =new Point2D(7,y);
                         Game.gameManager().spawnBuilding(location,bot,t);

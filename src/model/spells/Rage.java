@@ -67,7 +67,7 @@ public class Rage {
                     unit.setDamage((int)(unit.getDamage()/1.4) );
                     unit.setAttackSpeed(unit.getAttackSpeed()*1.4);
                     if(unit instanceof Troop){
-                        ((Troop) unit).setMovementSpeed((int) (((Troop) unit).getMovementSpeed()/1.4));
+                        ((Troop) unit).setMovementSpeed((int) (((Troop) unit).getMovementSpeed()/1.2));
                     }
                 }
             }
